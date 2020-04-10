@@ -1,0 +1,174 @@
+/*登录*/
+.loginBody {
+    background-image: url("../../images/bg_login.jpg");
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.login {
+    margin: 100px auto;
+    background: #FFFFFF;
+    width: 1080px;
+    height:700px;
+    background:rgba(255,255,255,1);
+    box-shadow:0 0 17px 4px rgba(97,124,69,0.6);
+    border-radius: 4px;
+}
+
+.login .logo {
+    width: 540px;
+    height: 700px;
+    float: left;
+}
+
+.login .logo img {
+    width: 456px;
+    height: 384px;
+    margin-top: 144px;
+    margin-left: 48px;
+}
+
+.login .formSection {
+    float: right;
+    width: 539px;
+    height: 700px;
+    border-left: 1px solid rgb(97,124,69);
+}
+
+.formSection .title {
+    text-align: center;
+    box-sizing: border-box;
+    margin: 30px 0;
+}
+
+.formSection .title img{
+    width: 340px;
+    height: 40px;
+    display: inline-block;
+}
+
+.formSection .title p{
+    margin-top: 20px;
+    font-size:36px;
+    font-family:PingFang SC;
+    font-weight:400;
+    color:rgb(158,159,156);
+}
+
+
+.formSection .maincontent {
+    border-top: 1px solid #e2e2e2;
+    box-sizing: border-box;
+    padding: 0 45px;
+}
+
+.login .login-avatar img {
+    width: 100%;
+}
+
+.login .layui-form-item {
+    position: relative;
+
+}
+
+.login .layui-form-item label {
+    display: block;
+    font-size:18px;
+    height: 50px;
+    line-height: 50px;
+    font-family: PingFang SC;
+    font-weight:400;
+    color: rgba(144,139,139,1);
+    background: #fff;
+}
+
+.login .layui-form-item label.inline {
+    display: inline;
+}
+
+.login .layui-form-item .inline-block {
+    display: inline-block;
+}
+
+.login .layui-input::-webkit-input-placeholder {
+    color: rgb(144,139,139);
+}
+
+.login .layui-input::-moz-placeholder {
+    color: rgb(144,139,139);
+}
+
+.login .layui-input:-ms-input-placeholder {
+    color: rgb(144,139,139);
+}
+
+.login .layui-input::placeholder {
+    color: rgb(144,139,139);
+}
+
+.login .layui-form-item.layui-input-focus input {
+    border-color: #ff6700 !important;
+}
+
+.login .layui-input-focus .layui-input::-webkit-input-placeholder {
+    color: #757575;
+}
+
+.login .layui-input-focus .layui-input::-moz-placeholder {
+    color: #757575;
+}
+
+.login .layui-input-focus .layui-input:-ms-input-placeholder {
+    color: #757575;
+}
+
+.login .layui-input-focus .layui-input::placeholder {
+    color: #757575;
+}
+
+.login .seraph {
+    font-size: 30px;
+    text-align: center;
+}
+
+.login .seraph.icon-qq:hover {
+    color: #0288d1;
+}
+
+.login .seraph.icon-wechat:hover {
+    color: #00d20d;
+}
+
+.login .seraph.icon-sina:hover {
+    color: #d32f2f;
+}
+
+.login .imgCode {
+    position: relative;
+}
+
+#imageCode {
+    width: 200px;
+}
+
+.login #imgCode img {
+    width: 130px;
+    height: 38px;
+    position: absolute;
+    bottom: 0;
+    right: 90px;
+    cursor: pointer;
+}
+
+#login {
+    width:300px;
+    height:50px;
+    background:rgba(97,124,69,1);
+    border-radius:4px;
+    margin: 44px auto;
+    display: block;
+}

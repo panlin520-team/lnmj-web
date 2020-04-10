@@ -1,0 +1,290 @@
+.aa {
+    overflow: hidden;
+    height: 500px;
+}
+
+.list_table {
+    width: 100%;
+    border-top: 1px solid #d3dbde;
+    border-right: 1px solid #d3dbde;
+}
+
+.list_table th {
+    height: 37px;
+    line-height: 37px;
+    border-left: 1px solid #d3dbde;
+    border-bottom: 1px solid #d3dbde;
+}
+
+.list_table td {
+    border-bottom: 1px solid #d3dbde;
+    border-left: 1px solid #d3dbde;
+    padding: 5px;
+}
+
+.form_table td {
+    padding: 5px 5px;
+}
+
+.td_center {
+    text-align: center;
+}
+
+.td_left {
+    text-align: left;
+}
+
+.td_right {
+    text-align: right;
+}
+
+.order_goods {
+    width: 100%;
+    height: 320px;
+    overflow: scroll;
+}
+
+.CRZ {
+    table-layout: fixed;
+}
+
+.CRZ td, .CRZ th {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    overflow: hidden;
+}
+
+.goods_code {
+    display: none;
+}
+
+input[name='num'] {
+    width: 20px;
+}
+
+#table tr td, #table_cus tr td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 1.2em;
+    line-height: 1.2em;
+}
+
+.span10 {
+    width: 100%;
+}
+
+.cus_list {
+    overflow-y: scroll;
+    width: 100%;
+    height: 460px;
+}
+
+.remarks {
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px black solid;
+    overflow: hidden;
+}
+
+.buttom_total {
+    width: 100%;
+    height: 80px;
+}
+
+.totalprice {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    line-height: 30px;
+    width: 180px;
+}
+
+.totalprice input {
+    border: 0px;
+    line-height: 30px;
+    font-size: 20px;
+    vertical-align: inherit;
+    width: 100px
+}
+
+.couponcode {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+    line-height: 30px;
+    display: none
+}
+
+.couponcode input {
+    line-height: 30px;
+    font-size: 20px;
+    vertical-align: inherit;
+    width: 100px;
+    border-radius: 5px
+}
+
+.integral_total {
+    position: absolute;
+    bottom: 40px;
+    right: 0px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    line-height: 30px;
+    width: 180px;
+}
+
+.integral_total input {
+    border: 0px;
+    line-height: 30px;
+    font-size: 20px;
+    vertical-align: inherit;
+    width: 100px;
+}
+
+.show_click, .show_click_cus {
+    width: 40%;
+    float: left;
+}
+
+.show_goods {
+    width: 58.5%;
+    float: right;
+    background-color: #78B200;
+}
+
+.show_click, .show_goods, .show_click_cus {
+    height: 480px;
+    border: 2px solid #000;
+    position: relative;
+    top: 15px;
+}
+
+.GoodsName {
+    width: 10%;
+    height: 3.6em;
+    line-height: 1.2em;
+    float: left;
+    background-color: #E5F5FD;
+    margin: 10px 1%;
+    border-radius: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 5px 1%;
+    position: relative
+}
+
+.nostock {
+    position: absolute;
+    background-color: yellow;
+    height: 20px;
+    right: 0px;
+    bottom: 0px;
+    text-align: center;
+    border-bottom-right-radius: 5px;
+    padding-right: 3px;
+}
+
+.operate {
+    margin: 20px auto;
+}
+
+.operate input[type=button] {
+    width: 100px;
+    font-size: 12px;
+    margin: 10px;
+    padding: 5px 0;
+    background-color: #7FB2C5;
+    border-radius: 5px;
+    border: none;
+}
+
+.keywords {
+    margin: 0 20px;
+    line-height: 2em;
+    width: 380px;
+}
+
+.user_message {
+    margin: 20px auto;
+    border: 2px solid #000;
+    position: relative
+}
+
+.VIPCard {
+    float: left;
+    margin: 10px;
+}
+
+.VIPCard label {
+    font-size: 18px;
+}
+
+ {
+    height: 25px;
+}
+
+.VIPCard input[type=button] {
+    width: 100px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+}
+
+.time {
+    position: relative;
+    overflow: hidden;
+    margin: 9px 4px;
+}
+
+.basetime_list {
+    width: 15%;
+    margin: 2px;
+    float: left;
+}
+
+.freebg {
+    background-color: #fff9ff;
+    color: black;
+}
+
+.basetime {
+    width: 70%;
+    height: 16px;
+}
+
+.clickbg {
+    background-color: #a7be70;
+    color: #fff;
+}
+
+.basetime_list input, .basetime_list select {
+    border-style: solid;
+}
+
+.btn {
+    display: inline-block;
+    padding: 5px 2px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px #999;
+}
+
+.btn:hover {background-color: #3e8e41}
+
+.btn:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}

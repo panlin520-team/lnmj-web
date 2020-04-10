@@ -1,0 +1,63 @@
+spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+    freemarker:
+      allow-request-override: false
+      cache: false
+      check-template-location: true
+      charset: UTF-8
+      content-type: text/html; charset=utf-8
+      expose-request-attributes: false
+      expose-session-attributes: false
+      expose-spring-macro-helpers: false
+      suffix: .ftl
+      template-loader-path: classpath:/templates
+  main:
+    allow-bean-definition-overriding: true
+  messages: #国际化语言
+    basename: classpath:./msg/msg
+    encoding: UTF-8
+    cache-duration: 3600
+  application:
+    name: lnmj-backManage
+logging:
+  level:
+    com.lnmj.account.core.bean: DEBUG
+  file: logs/sql-log.log
+eureka:
+  instance:
+    ip-address: 192.168.100.3
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true #暂时停止注册服务
+    fetch-registry: true #暂时停止注册服务
+    service-url:
+      defaultZone: http://192.168.100.3:81/eureka/ #需要将服务注册到那个注册中心（地址）去
+server:
+  port: 92  #自身服务端口
+oauth2:
+  storeType: jwt
+  user:
+    client-id: user-service
+    client-secret: 123456
+  key:
+    priKeyPath: classpath:pri.key
+    pubKeyPath: classpath:pub.key
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 30000
+
+permitAll:
+  url: "/account/login,/account/register,/account/checkMobileValid,/account/forgetResetPassword,/account/getValidCode,/manage/account/login,/account/sendMobileCode,/account/checkValid,/account/sendEmailAuthentication"

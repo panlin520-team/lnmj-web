@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>员工管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="${basePath!}/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="${basePath!}/css/index.css" media="all"/>
+    <script src="${basePath!}/layui/layui.js" charset="utf-8"></script>
+    <script src="${basePath!}/js/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="${basePath!}/assets/city-picker.data.js"></script>
+    <script type="text/javascript" src="${basePath!}/assets/province.js"></script>
+    <script src="${basePath!}/js/host.js" type="text/javascript"></script>
+    <#include "../../baseFtl/pageAuth.ftl" />
+    <style>
+        .nore_time {
+            background-color: #5A7C48;
+            margin: 5px 8px 2px 2px;
+            float: left;
+            padding: 5px auto 5px auto;
+            border-radius: 5px;
+        }
+
+        .tofree {
+            background-color: #5A7C48;
+        }
+
+        .tobusy {
+            background-color: #F58100;
+        }
+
+        .torest {
+            background-color: #B2B2B2;
+        }
+
+        .resetLabel {
+            width: 70px;
+        }
+
+        label.xrequired:before {
+            content: '* ';
+            color: red;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="demoTable layui-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">请选择门店</label>
+                <div class="layui-input-inline">
+                    <select name="stores" id="stores" lay-filter="stores">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label resetLabel">员工编号</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" type="text" name="keyWordStaffNumber" autocomplete="off"
+                           placeholder="输入员工号码">
+                </div>
+                <label class="layui-form-label">名字</label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" type="text" name="keyWordName" autocomplete="off" placeholder="输入名字">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" data-type="search"><i class="layui-icon layui-icon-search"></i></button>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-btn-group demoTable">
+                    <button class="layui-btn" id="add">增加</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <table id="beautician" lay-filter="demo"></table>
+</div>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <#-- <a class="layui-btn layui-btn-xs" lay-event="addProjuects">授权</a>-->
+    <#--<a class="layui-btn layui-btn-xs" lay-event="orderwork">排班</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<#--点击添加后的表单-->
+<div id="addformdivid" hidden="" class="layui-fluid" style="margin: 15px;">
+    <form class="layui-form layui-form-pane layui-personal" action="" id="addeditformid">
+
+        <div class="layui-form-item" hidden="true">
+            <label class="layui-form-label">美容师id</label>
+            <div class="layui-input-block">
+                <input type="text" name="beauticianId" lay-verify="<#--required-->" autocomplete="off" placeholder=""
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">美容师名字</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入美容师名称"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">美容师电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="mobile" lay-verify="required" autocomplete="off" placeholder="请输入美容师电话"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="gender" value="1" title="男" checked="">
+                <input type="radio" name="gender" value="0" title="女">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">是否计算底薪</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isBasicSalary" value="1" title="是" checked="">
+                <input type="radio" name="isBasicSalary" value="0" title="否">
+            </div>
+        </div>
+
+        <#--<div class="layui-form-item" hidden="true">
+            <label class="layui-form-label">员工号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="staffNumber" lay-verify="&lt;#&ndash;required&ndash;&gt;" autocomplete="off"
+                       placeholder="请输入员工号"
+                       class="layui-input">
+            </div>
+        </div>-->
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">入职时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="entryTime" class="layui-input" id="entryTimeAdd"
+                           placeholder="yyyy-MM-dd HH:mm:ss">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">所属店铺</label>
+            <div class="layui-input-block" style="width:150px;">
+                <select name="storeId" id="storeAdd" lay-filter="store" lay-verify="required">
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属分组</label>
+            <div class="layui-input-block" style="width:150px;">
+                <select name="groupId" id="groupIdAdd" lay-filter="groupId" <#--lay-verify="required"-->>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">所属职位分类</label>
+            <div class="layui-input-block" style="width:150px;">
+                <select name="postCategoryId" id="postCategoryIdAdd" lay-filter="postCategoryIdAdd"
+                        lay-verify="required">
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">所属职位</label>
+            <div class="layui-input-block" style="width:150px;">
+                <select name="postId" id="postIdAdd" lay-filter="postId" lay-verify="required">
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否跳过轮班</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isSkipTurn" value="0" title="否" checked="">
+                <input type="radio" name="isSkipTurn" value="1" title="是">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">手法评分</label>
+            <div class="layui-input-block">
+                <input type="text" name="tactGrade" <#--lay-verify="required"--> autocomplete="off"
+                       placeholder="请输入员工手法评分"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">技能评分</label>
+            <div class="layui-input-block">
+                <input type="text" name="skillGrade" <#--lay-verify="required"--> autocomplete="off"
+                       placeholder="请输入员工技能评分"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item" hidden="true">
+            <label class="layui-form-label">累计客户</label>
+            <div class="layui-input-block">
+                <input type="text" name="cumulativeCustomer" <#--lay-verify="required"--> autocomplete="off"
+                       placeholder="请输入员工累计评分"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="text" name="sort" <#--lay-verify="required"--> autocomplete="off" placeholder="请输入员工排序"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <#--<div class="layui-form-item">
+            <label class="layui-form-label">美容师等级</label>
+            <div class="layui-input-block">
+                <select name="gradeId" id="gradeIdAdd" lay-filter="gradeId" lay-verify="required">
+                    <option value="1">一级</option>
+                    <option value="2">二级</option>
+                    <option value="3">三级</option>
+                    <option value="4">四级</option>
+                    <option value="5">五级</option>
+                </select>
+            </div>
+        </div>-->
+
+
+        <div class="layui-upload">
+            <button type="button" class="layui-btn" id="test1">选择美容师头像图片</button>
+            <button type="button" class="layui-btn" id="startUpAdd">开始上传</button>
+            <div class="layui-upload-list">
+                <img class="layui-upload-img" id="demo1" style="width:100px;height: 100px">
+                <p id="demoText"></p>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">在职状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="workingState" value="0" title="不在职" checked="">
+                <input type="radio" name="workingState" value="1" title="在职">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">人物简介</label>
+            <div class="layui-input-block">
+                <input type="text" name="introduction" <#--lay-verify="required"--> autocomplete="off"
+                       placeholder="请输入员工人物简介"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否兼职</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isPartTime" value="0" title="否" checked="">
+                <input type="radio" name="isPartTime" value="1" title="是">
+            </div>
+        </div>
+
+        <#--   <div class="layui-form-item" hidden="true">
+               <label class="layui-form-label">用户userId</label>
+               <div class="layui-input-block">
+                   <input type="text" name="userId" lay-verify="&lt;#&ndash;required&ndash;&gt;" autocomplete="off" placeholder="请输入员工用户id"
+                          class="layui-input">
+               </div>
+           </div>-->
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button name="submit" id="" class="layui-btn" lay-submit="" lay-filter="addsubmitfilter">立即提交
+                </button>
+                <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<#--点击查看或修改后的表单-->
+<div id="editformdivid" hidden="" class="layui-fluid" style="margin: 15px;">
+    <form class="layui-form layui-form-pane layui-personal" action="" id="editForm" lay-filter="exampleEdit">
+        <div class="layui-form-item" hidden="true">
+            <label class="layui-form-label">美容师id</label>
+            <div class="layui-input-block">
+                <input type="text" name="beauticianId" lay-verify="<#--required-->" autocomplete="off" placeholder=""
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">美容师名字</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入美容师名称"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">美容师电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="mobile" lay-verify="required" autocomplete="off" placeholder="请输入美容师电话"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="gender" value="1" title="男" checked="">
+                <input type="radio" name="gender" value="0" title="女">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">是否计算底薪</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isBasicSalary" value="1" title="是" checked="">
+                <input type="radio" name="isBasicSalary" value="0" title="否">
+            </div>
+        </div>
+
+        <#--<div class="layui-form-item" hidden="true">
+            <label class="layui-form-label">员工号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="staffNumber" lay-verify="required" autocomplete="off" placeholder="请输入员工号"
+                       class="layui-input">
+            </div>
+        </div>
+    -->
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">入职时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="entryTime" class="layui-input" id="entryTime"
+                           placeholder="yyyy-MM-dd HH:mm:ss">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">所属店铺</label>
+            <div class="layui-input-block" style="width:150px;">
+                <select name="storeId" id="store" lay-filter="store" lay-verify="required">
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属分组</label>
+            <div class="layui-input-block" style="width:150px;">
+                <select name="groupId" id="groupId" lay-filter="groupId" <#--lay-verify="required"-->>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">所属职位分类</label>
+            <div class="layui-input-block" style="width:150px;">
+                <select name="postCategoryId" id="postCategoryId"
+                        lay-filter="postCategoryId" <#--lay-verify="required"-->>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label xrequired">所属职位</label>
+            <div class="layui-input-block" style="width:150px;">
+                <select name="postId" id="postId" lay-filter="postId" <#--lay-verify="required"-->>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否跳过轮班</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isSkipTurn" value="0" title="否" checked="">
+                <input type="radio" name="isSkipTurn" value="1" title="是">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">手法评分</label>
+            <div class="layui-input-block">
+                <input type="text" name="tactGrade" <#--lay-verify="required"--> autocomplete="off"
+                       placeholder="请输入员工手法评分"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">技能评分</label>
+            <div class="layui-input-block">
+                <input type="text" name="skillGrade" <#--lay-verify="required"--> autocomplete="off"
+                       placeholder="请输入员工技能评分"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item" hidden="true">
+            <label class="layui-form-label">累计客户</label>
+            <div class="layui-input-block">
+                <input type="text" name="cumulativeCustomer" <#--lay-verify="required"--> autocomplete="off"
+                       placeholder="请输入员工累计评分"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="text" name="sort" <#--lay-verify="required"--> autocomplete="off" placeholder="请输入员工排序"
+                       class="layui-input">
+            </div>
+        </div>
+
+
+        <#-- <div class="layui-form-item">
+             <label class="layui-form-label">美容师等级</label>
+             <div class="layui-input-block">
+                 <select name="gradeId" id="gradeId" lay-filter="gradeId" lay-verify="required">
+                     <option value="1">一级</option>
+                     <option value="2">二级</option>
+                     <option value="3">三级</option>
+                     <option value="4">四级</option>
+                     <option value="5">五级</option>
+                 </select>
+             </div>
+         </div>-->
+
+
+        <div class="layui-upload">
+            <button type="button" class="layui-btn" id="test2">选择美容师头像图片</button>
+            <button type="button" class="layui-btn" id="startUp">开始上传</button>
+            <div class="layui-upload-list">
+                <img class="layui-upload-img" id="demo2" style="width:100px;height: 100px">
+                <p id="demoText2"></p>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">在职状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="workingState" value="0" title="不在职" checked="">
+                <input type="radio" name="workingState" value="1" title="在职">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">人物简介</label>
+            <div class="layui-input-block">
+                <input type="text" name="introduction" <#--lay-verify="required"--> autocomplete="off"
+                       placeholder="请输入员工人物简介"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否兼职</label>
+            <div class="layui-input-block">
+                <input type="radio" name="isPartTime" value="0" title="否" checked="">
+                <input type="radio" name="isPartTime" value="1" title="是">
+            </div>
+        </div>
+
+        <#--<div class="layui-form-item" hidden="true">
+            <label class="layui-form-label">用户userId</label>
+            <div class="layui-input-block">
+                <input type="text" name="userId" lay-verify="required" autocomplete="off" placeholder="请输入员工用户id"
+                       class="layui-input">
+            </div>
+        </div>-->
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button name="submit" id="" class="layui-btn" lay-submit="" lay-filter="editsubmitfilter">立即提交
+                </button>
+                <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+    <form class="orderworkDate" action="" method="post" hidden="hidden">
+        <li class="manage" style="display: block;">时间管理：
+            <input class="tofree border" type="button" id="tofree" value="空闲" data-type="1" onclick="timeStatus(1)">
+            <input class="tobusy border" type="button" id="tobusy" value="忙碌" data-type="2" onclick="timeStatus(2)">
+            <input class="torest border" type="button" id="torest" value="休息" data-type="3" onclick="timeStatus(3)">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">排班日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="normalDate" placeholder="yyyy-MM-dd">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </li>
+        <li class="nore" style="display: none;">批量处理：
+            <select name="begin_time">
+                <option value="0">请选择</option>
+                <option value="7">09:00</option>
+                <option value="8">09:10</option>
+                <option value="9">09:20</option>
+                <option value="10">09:30</option>
+                <option value="11">09:40</option>
+                <option value="12">09:50</option>
+                <option value="13">10:00</option>
+                <option value="14">10:10</option>
+                <option value="15">10:20</option>
+                <option value="16">10:30</option>
+                <option value="17">10:40</option>
+                <option value="18">10:50</option>
+                <option value="19">11:00</option>
+                <option value="20">11:10</option>
+                <option value="21">11:20</option>
+                <option value="22">11:30</option>
+                <option value="23">11:40</option>
+                <option value="24">11:50</option>
+                <option value="25">12:00</option>
+                <option value="26">12:10</option>
+                <option value="27">12:20</option>
+                <option value="28">12:30</option>
+                <option value="29">12:40</option>
+                <option value="30">12:50</option>
+                <option value="31">13:00</option>
+                <option value="32">13:10</option>
+                <option value="33">13:20</option>
+                <option value="34">13:30</option>
+                <option value="35">13:40</option>
+                <option value="36">13:50</option>
+                <option value="37">14:00</option>
+                <option value="38">14:10</option>
+                <option value="39">14:20</option>
+                <option value="40">14:30</option>
+                <option value="41">14:40</option>
+                <option value="42">14:50</option>
+                <option value="43">15:00</option>
+                <option value="44">15:10</option>
+                <option value="45">15:20</option>
+                <option value="46">15:30</option>
+                <option value="47">15:40</option>
+                <option value="48">15:50</option>
+                <option value="49">16:00</option>
+                <option value="50">16:10</option>
+                <option value="51">16:20</option>
+                <option value="52">16:30</option>
+                <option value="53">16:40</option>
+                <option value="54">16:50</option>
+                <option value="55">17:00</option>
+                <option value="56">17:10</option>
+                <option value="57">17:20</option>
+                <option value="58">17:30</option>
+                <option value="59">17:40</option>
+                <option value="60">17:50</option>
+                <option value="61">18:00</option>
+                <option value="62">18:10</option>
+                <option value="63">18:20</option>
+                <option value="64">18:30</option>
+                <option value="65">18:40</option>
+                <option value="66">18:50</option>
+                <option value="67">19:00</option>
+                <option value="68">19:10</option>
+                <option value="69">19:20</option>
+                <option value="70">19:30</option>
+                <option value="71">19:40</option>
+                <option value="72">19:50</option>
+                <option value="73">20:00</option>
+                <option value="74">20:10</option>
+                <option value="75">20:20</option>
+                <option value="76">20:30</option>
+                <option value="77">20:40</option>
+                <option value="78">20:50</option>
+                <option value="79">21:00</option>
+                <option value="80">21:10</option>
+                <option value="81">21:20</option>
+                <option value="82">21:30</option>
+                <option value="83">21:40</option>
+                <option value="84">21:50</option>
+                <option value="85">22:00</option>
+                <option value="86">22:10</option>
+                <option value="87">22:20</option>
+                <option value="88">22:30</option>
+                <option value="89">22:40</option>
+                <option value="90">22:50</option>
+                <option value="91">23:00</option>
+                <option value="92">23:10</option>
+                <option value="93">23:20</option>
+                <option value="94">23:30</option>
+                <option value="95">23:40</option>
+                <option value="96">23:50</option>
+                <option value="97">24:00</option>
+            </select>
+            <select name="end_time">
+                <option value="0">请选择</option>
+                <option value="7">09:00</option>
+                <option value="8">09:10</option>
+                <option value="9">09:20</option>
+                <option value="10">09:30</option>
+                <option value="11">09:40</option>
+                <option value="12">09:50</option>
+                <option value="13">10:00</option>
+                <option value="14">10:10</option>
+                <option value="15">10:20</option>
+                <option value="16">10:30</option>
+                <option value="17">10:40</option>
+                <option value="18">10:50</option>
+                <option value="19">11:00</option>
+                <option value="20">11:10</option>
+                <option value="21">11:20</option>
+                <option value="22">11:30</option>
+                <option value="23">11:40</option>
+                <option value="24">11:50</option>
+                <option value="25">12:00</option>
+                <option value="26">12:10</option>
+                <option value="27">12:20</option>
+                <option value="28">12:30</option>
+                <option value="29">12:40</option>
+                <option value="30">12:50</option>
+                <option value="31">13:00</option>
+                <option value="32">13:10</option>
+                <option value="33">13:20</option>
+                <option value="34">13:30</option>
+                <option value="35">13:40</option>
+                <option value="36">13:50</option>
+                <option value="37">14:00</option>
+                <option value="38">14:10</option>
+                <option value="39">14:20</option>
+                <option value="40">14:30</option>
+                <option value="41">14:40</option>
+                <option value="42">14:50</option>
+                <option value="43">15:00</option>
+                <option value="44">15:10</option>
+                <option value="45">15:20</option>
+                <option value="46">15:30</option>
+                <option value="47">15:40</option>
+                <option value="48">15:50</option>
+                <option value="49">16:00</option>
+                <option value="50">16:10</option>
+                <option value="51">16:20</option>
+                <option value="52">16:30</option>
+                <option value="53">16:40</option>
+                <option value="54">16:50</option>
+                <option value="55">17:00</option>
+                <option value="56">17:10</option>
+                <option value="57">17:20</option>
+                <option value="58">17:30</option>
+                <option value="59">17:40</option>
+                <option value="60">17:50</option>
+                <option value="61">18:00</option>
+                <option value="62">18:10</option>
+                <option value="63">18:20</option>
+                <option value="64">18:30</option>
+                <option value="65">18:40</option>
+                <option value="66">18:50</option>
+                <option value="67">19:00</option>
+                <option value="68">19:10</option>
+                <option value="69">19:20</option>
+                <option value="70">19:30</option>
+                <option value="71">19:40</option>
+                <option value="72">19:50</option>
+                <option value="73">20:00</option>
+                <option value="74">20:10</option>
+                <option value="75">20:20</option>
+                <option value="76">20:30</option>
+                <option value="77">20:40</option>
+                <option value="78">20:50</option>
+                <option value="79">21:00</option>
+                <option value="80">21:10</option>
+                <option value="81">21:20</option>
+                <option value="82">21:30</option>
+                <option value="83">21:40</option>
+                <option value="84">21:50</option>
+                <option value="85">22:00</option>
+                <option value="86">22:10</option>
+                <option value="87">22:20</option>
+                <option value="88">22:30</option>
+                <option value="89">22:40</option>
+                <option value="90">22:50</option>
+                <option value="91">23:00</option>
+                <option value="92">23:10</option>
+                <option value="93">23:20</option>
+                <option value="94">23:30</option>
+                <option value="95">23:40</option>
+                <option value="96">23:50</option>
+                <option value="97">24:00</option>
+            </select>
+            <button type="button" class="layui-btn layui-btn-xs" onclick="moreTime()">点击进行批量修改</button>
+            <select name="time_status">
+                <option value="0">请选择</option>
+                <option value="1">空闲</option>
+                <option value="2">忙碌</option>
+                <option value="3">休息</option>
+            </select>
+
+        </li>
+        <li class="nore" style="display: none;">
+            <div class="nore_time" id="7" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="7"><font>09:00</font>
+            </div>
+            <div class="nore_time" id="8" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="8"><font>09:10</font>
+            </div>
+            <div class="nore_time" id="9" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="9"><font>09:20</font>
+            </div>
+            <div class="nore_time" id="10" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="10"><font>09:30</font>
+            </div>
+            <div class="nore_time" id="11" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="11"><font>09:40</font>
+            </div>
+            <div class="nore_time" id="12" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="12"><font>09:50</font>
+            </div>
+            <div class="nore_time" id="13" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="13"><font>10:00</font>
+            </div>
+            <div class="nore_time" id="14" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="14"><font>10:10</font>
+            </div>
+            <div class="nore_time" id="15" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="15"><font>10:20</font>
+            </div>
+            <div class="nore_time" id="16" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="16"><font>10:30</font>
+            </div>
+            <div class="nore_time" id="17" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="17"><font>10:40</font>
+            </div>
+            <div class="nore_time" id="18" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="18"><font>10:50</font>
+            </div>
+            <div class="nore_time" id="19" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="19"><font>11:00</font>
+            </div>
+            <div class="nore_time" id="20" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="20"><font>11:10</font>
+            </div>
+            <div class="nore_time" id="21" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="21"><font>11:20</font>
+            </div>
+            <div class="nore_time" id="22" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="22"><font>11:30</font>
+            </div>
+            <div class="nore_time" id="23" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="23"><font>11:40</font>
+            </div>
+            <div class="nore_time" id="24" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="24"><font>11:50</font>
+            </div>
+            <div class="nore_time" id="25" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="25"><font>12:00</font>
+            </div>
+            <div class="nore_time" id="26" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="26"><font>12:10</font>
+            </div>
+            <div class="nore_time" id="27" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="27"><font>12:20</font>
+            </div>
+            <div class="nore_time" id="28" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="28"><font>12:30</font>
+            </div>
+            <div class="nore_time" id="29" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="29"><font>12:40</font>
+            </div>
+            <div class="nore_time" id="30" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="30"><font>12:50</font>
+            </div>
+            <div class="nore_time" id="31" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="31"><font>13:00</font>
+            </div>
+            <div class="nore_time" id="32" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="32"><font>13:10</font>
+            </div>
+            <div class="nore_time" id="33" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="33"><font>13:20</font>
+            </div>
+            <div class="nore_time" id="34" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="34"><font>13:30</font>
+            </div>
+            <div class="nore_time" id="35" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="35"><font>13:40</font>
+            </div>
+            <div class="nore_time" id="36" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="36"><font>13:50</font>
+            </div>
+            <div class="nore_time" id="37" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="37"><font>14:00</font>
+            </div>
+            <div class="nore_time" id="38" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="38"><font>14:10</font>
+            </div>
+            <div class="nore_time" id="39" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="39"><font>14:20</font>
+            </div>
+            <div class="nore_time" id="40" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="40"><font>14:30</font>
+            </div>
+            <div class="nore_time" id="41" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="41"><font>14:40</font>
+            </div>
+            <div class="nore_time" id="42" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="42"><font>14:50</font>
+            </div>
+            <div class="nore_time" id="43" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="43"><font>15:00</font>
+            </div>
+            <div class="nore_time" id="44" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="44"><font>15:10</font>
+            </div>
+            <div class="nore_time" id="45" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="45"><font>15:20</font>
+            </div>
+            <div class="nore_time" id="46" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="46"><font>15:30</font>
+            </div>
+            <div class="nore_time" id="47" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="47"><font>15:40</font>
+            </div>
+            <div class="nore_time" id="48" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="48"><font>15:50</font>
+            </div>
+            <div class="nore_time" id="49" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="49"><font>16:00</font>
+            </div>
+            <div class="nore_time" id="50" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="50"><font>16:10</font>
+            </div>
+            <div class="nore_time" id="51" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="51"><font>16:20</font>
+            </div>
+            <div class="nore_time" id="52" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="52"><font>16:30</font>
+            </div>
+            <div class="nore_time" id="53" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="53"><font>16:40</font>
+            </div>
+            <div class="nore_time" id="54" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="54"><font>16:50</font>
+            </div>
+            <div class="nore_time" id="55" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="55"><font>17:00</font>
+            </div>
+            <div class="nore_time" id="56" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="56"><font>17:10</font>
+            </div>
+            <div class="nore_time" id="57" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="57"><font>17:20</font>
+            </div>
+            <div class="nore_time" id="58" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="58"><font>17:30</font>
+            </div>
+            <div class="nore_time" id="59" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="59"><font>17:40</font>
+            </div>
+            <div class="nore_time" id="60" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="60"><font>17:50</font>
+            </div>
+            <div class="nore_time" id="61" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="61"><font>18:00</font>
+            </div>
+            <div class="nore_time" id="62" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="62"><font>18:10</font>
+            </div>
+            <div class="nore_time" id="63" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="63"><font>18:20</font>
+            </div>
+            <div class="nore_time" id="64" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="64"><font>18:30</font>
+            </div>
+            <div class="nore_time" id="65" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="65"><font>18:40</font>
+            </div>
+            <div class="nore_time" id="66" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="66"><font>18:50</font>
+            </div>
+            <div class="nore_time" id="67" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="67"><font>19:00</font>
+            </div>
+            <div class="nore_time" id="68" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="68"><font>19:10</font>
+            </div>
+            <div class="nore_time" id="69" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="69"><font>19:20</font>
+            </div>
+            <div class="nore_time" id="70" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="70"><font>19:30</font>
+            </div>
+            <div class="nore_time" id="71" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="71"><font>19:40</font>
+            </div>
+            <div class="nore_time" id="72" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="72"><font>19:50</font>
+            </div>
+            <div class="nore_time" id="73" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="73"><font>20:00</font>
+            </div>
+            <div class="nore_time" id="74" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="74"><font>20:10</font>
+            </div>
+            <div class="nore_time" id="75" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="75"><font>20:20</font>
+            </div>
+            <div class="nore_time" id="76" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="76"><font>20:30</font>
+            </div>
+            <div class="nore_time" id="77" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="77"><font>20:40</font>
+            </div>
+            <div class="nore_time" id="78" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="78"><font>20:50</font>
+            </div>
+            <div class="nore_time" id="79" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="79"><font>21:00</font>
+            </div>
+            <div class="nore_time" id="80" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="80"><font>21:10</font>
+            </div>
+            <div class="nore_time" id="81" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="81"><font>21:20</font>
+            </div>
+            <div class="nore_time" id="82" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="82"><font>21:30</font>
+            </div>
+            <div class="nore_time" id="83" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="83"><font>21:40</font>
+            </div>
+            <div class="nore_time" id="84" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="84"><font>21:50</font>
+            </div>
+            <div class="nore_time" id="85" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="85"><font>22:00</font>
+            </div>
+            <div class="nore_time" id="86" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="86"><font>22:10</font>
+            </div>
+            <div class="nore_time" id="87" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="87"><font>22:20</font>
+            </div>
+            <div class="nore_time" id="88" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="88"><font>22:30</font>
+            </div>
+            <div class="nore_time" id="89" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="89"><font>22:40</font>
+            </div>
+            <div class="nore_time" id="90" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="90"><font>22:50</font>
+            </div>
+            <div class="nore_time" id="91" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="91"><font>23:00</font>
+            </div>
+            <div class="nore_time" id="92" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="92"><font>23:10</font>
+            </div>
+            <div class="nore_time" id="93" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="93"><font>23:20</font>
+            </div>
+            <div class="nore_time" id="94" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="94"><font>23:30</font>
+            </div>
+            <div class="nore_time" id="95" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="95"><font>23:40</font>
+            </div>
+            <div class="nore_time" id="96" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="96"><font>23:50</font>
+            </div>
+            <div class="nore_time" id="97" style="background-color: rgb(90, 124, 72);">
+                <input type="checkbox" name="check" value="97"><font>24:00</font>
+            </div>
+        </li>
+        <li class="nore" style="display: none;">
+            <button type="button" class="layui-btn layui-btn-xs" onclick="deleteOrderWork()">删除排班</button>
+        </li>
+    </form>
+
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<#--是否打折自定义显示-->
+<script type="text/html" id="isBasicSalary">
+    {{#  if(d.isBasicSalary == 0){ }}
+    否
+    {{#  }else if(d.isBasicSalary == 1){ }}
+    是
+    {{#  } }}
+</script>
+<script>
+    //列表显示--美容师
+    var resultImgUrlAdd = "";
+    var resultImgUrl = "";
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#beautician'
+            , url: storeHost + "/manage/beautician/selectBeauticianList"
+            , cellMinWidth: 60 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , page: true          //显示分页默认不显示
+            , method: 'post'
+            , id: 'beauticianReload'
+            , request: {
+                pageName: 'pageNum', //页码的参数名称，默认：page
+                limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            }
+            , where: {
+                storeId: 0,
+                companyType: "${currentUser.companyType!}",
+                companyId: "${currentUser.companyId!}"
+            }
+            , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": 0, //解析接口状态
+                    "msg": "", //解析提示文本
+                    "count": res.result == null ? 0 : res.result.total, //解析数据长度
+                    "data": res.result == null ? 0 : res.result.list //解析数据列表
+                };
+            }
+            , cols: [[
+                {type: 'checkbox', fixed: 'left', width: 40}
+                , {
+                    field: 'headUrl', title: '美容师头像', fixed: 'left', templet: function (d) {
+                        return d.headUrl == "" || d.headUrl == null ? "<div><img src='/noImg.png' style='width:60px;height: 60px'></div>" : "<div><img src=" + d.headUrl + " style='width:60px;height: 60px'></div>"
+                    }
+                }
+                , {field: 'name', title: '美容师名称', fixed: 'left'}
+                , {field: 'staffNumber', title: '员工号码'}
+                , {field: 'isBasicSalary', title: '是否计算底薪', templet: '#isBasicSalary'}
+                , {field: 'introduction', title: '人物简介'}
+                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
+            ]]
+        });
+    });
+
+
+    //增删改查操作实现
+    var layerid;//当前弹层id;这个id可以定义多个，主要的目的是为了在回调函数关闭弹层时使用的
+    var selectBoxsAll;//授权框中选中的行
+    var resultDataAll;//请求返回的所有数据
+    var resultDataAllSearch;//请求返回的搜索数据
+    var isFind = 0;
+    layui.use(['table', 'layer', 'jquery', 'form'], function () {
+        var table = layui.table,
+            layer = layui.layer,
+            $ = layui.jquery,
+            form = layui.form;
+        loadPost(null);
+        loadSubCompanyStore(form);
+        loadPostCategory(form);
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+        });
+
+        table.on('checkbox(selectProjectDemo)', function (obj) {
+            if (obj.type == "one") {//如果是单行选
+                if (obj.checked) {//如果选中,加入
+                    selectBoxsAll.push(obj.data.serviceProductId)
+                } else {//如果没选中,删除
+                    var index = selectBoxsAll.indexOf(obj.data.serviceProductId);
+                    if (index > -1) {
+                        selectBoxsAll.splice(index, 1);
+                    }
+                }
+            } else if (obj.type == "all") {//如果是全选
+                if (isFind == 1) {//如果是搜索
+                    if (obj.checked) {//是全选
+                        for (var select in resultDataAllSearch) {
+                            var flag = true;
+                            for (var all in selectBoxsAll) {
+                                if (resultDataAllSearch[select].serviceProductId == selectBoxsAll[all]) {
+                                    flag = false;
+                                }
+                            }
+                            if (flag == true) {//如果在全部里面找不到，就加入
+                                selectBoxsAll.push(resultDataAllSearch[select].serviceProductId)
+                            }
+                        }
+                    } else {//不是全选
+
+                        for (var select in resultDataAllSearch) {
+                            var flag = true;
+                            for (var all in selectBoxsAll) {
+                                if (resultDataAllSearch[select].serviceProductId == selectBoxsAll[all]) {
+                                    flag = false;
+                                }
+                            }
+                            if (flag == false) {//如果在全部里面找的到，就删除
+                                var inde = selectBoxsAll.indexOf(resultDataAllSearch[select].serviceProductId);
+                                selectBoxsAll.splice(inde, 1);
+                            }
+                        }
+                    }
+                } else if (isFind == 0) {//不是搜索
+                    if (obj.checked) {//是全选
+                        selectBoxsAll = new Array();
+                        for (var all in resultDataAll) {
+                            selectBoxsAll.push(resultDataAll[all].serviceProductId)
+                        }
+                    } else {//不是全选
+                        selectBoxsAll = new Array();
+                    }
+                }
+
+            }
+
+        });
+
+
+        //监听工具条
+        table.on('tool(demo)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                loadShop(data);
+                loadGroup(data);
+                layerShow(form, data, table, $);
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    layerDelete(data, table, $);
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                loadShop(data);
+                loadGroup(data);
+                layerShowAndEdit(form, data, table, $);
+            } else if (obj.event === 'addProjuects') {
+                bindingProject(data, table, $);
+            } else if (obj.event === 'orderwork') {
+                orderwork(data, table, $);
+            }
+        });
+
+
+        //添加中职位分类
+        form.on('select(postCategoryIdAdd)', function (data) {
+            loadPostForAdd(data.value)
+        });
+
+
+        //修改中职位分类
+        form.on('select(postCategoryId)', function (data) {
+            loadPost(data.value)
+        });
+
+
+        //监听添加提交
+        form.on('submit(addsubmitfilter)', function (data) {
+            //为了防止form中的id值被重置后置空,将编辑的id存放在label中
+            $("#editid").val($("#editlabelid").html());
+            $("#editlabelid").html("");
+            if (resultImgUrlAdd == "") {
+                //如果没有上传
+                layer.open({
+                    skin: 'layui-layer-molv',
+                    type: 1,
+                    area: "10%",
+                    content: "您还未上次头像图片，要继续添加吗？",
+                    shadeClose: true,
+                    btn: ['继续', '取消'],
+                    yes: function (index) {
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                        $.ajax({
+                            type: "POST",
+                            url: storeHost + "/manage/beautician/insertBeautician",
+                            data: $('#addeditformid').serialize() + "&createOperator=" + "${currentUser.trueName!}" + "&headUrl=" + resultImgUrlAdd,
+                            async: false,
+                            error: function (request) {
+                                layer.alert("与服务器连接失败/(ㄒoㄒ)/~~");
+                            },
+                            success: function (data) {
+                                if (data.responseStatusType.message == 'Failure') {
+                                    layer.alert(data.responseStatusType.error.errorMsg);
+                                }
+                                if (data.responseStatusType.message == 'Success') {
+                                    layer.open({
+                                        skin: 'layui-layer-molv',
+                                        type: 1,
+                                        area: "10%",
+                                        content: "操作成功:" + data.result.message,
+                                        shadeClose: true,
+                                        btn: ["关闭"],
+                                        yes: function (index) {
+                                            layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                        }, end: function () {
+                                            layer.close(layerid);
+                                            $("#reset").click();//重置表单
+                                            table.reload("beauticianReload");
+                                        }
+                                    });
+
+                                }
+                            }
+                        });
+                    },
+                    btn2: function (index) {
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: storeHost + "/manage/beautician/insertBeautician",
+                    data: $('#addeditformid').serialize() + "&createOperator=" + "${currentUser.trueName!}" + "&imgUrl=" + resultImgUrlAdd,
+                    async: false,
+                    error: function (request) {
+                        layer.alert("与服务器连接失败/(ㄒoㄒ)/~~");
+                    },
+                    success: function (data) {
+                        if (data.responseStatusType.message == 'Failure') {
+                            layer.alert(data.responseStatusType.error.errorMsg);
+                        }
+                        if (data.responseStatusType.message == 'Success') {
+                            layer.open({
+                                skin: 'layui-layer-molv',
+                                type: 1,
+                                area: "10%",
+                                content: "操作成功:" + data.result.message,
+                                shadeClose: true,
+                                btn: ["关闭"],
+                                yes: function (index) {
+                                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                }, end: function () {
+                                    layer.close(layerid);
+                                    $("#reset").click();//重置表单
+                                    table.reload("beauticianReload");
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
+            return false;
+        });
+
+        //监听修改提交
+        form.on('submit(editsubmitfilter)', function (data) {
+            var isBasicSalary = $("input[name='isBasicSalary']").is(":checked") == true ? 1 : 0;
+            $.ajax({
+                type: "POST",
+                url: storeHost + "/manage/beautician/updateBeautician",
+                data: $('#editForm').serialize() + "&modifyOperator=" + "${currentUser.trueName!}"+ "&headUrl=" + resultImgUrl,
+                async: false,
+                error: function (request) {
+                    layer.alert("与服务器连接失败/(ㄒoㄒ)/~~");
+                },
+                success: function (data) {
+                    if (data.responseStatusType.message == 'Failure') {
+                        layer.alert(data.responseStatusType.error.errorMsg);
+                    }
+                    if (data.responseStatusType.message == 'Success') {
+
+                        layer.open({
+                            title: '修改'
+                            , content: '修改成功！'
+                            , btn: ["确认"]
+                            , yes: function (index) {
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                            }, end: function () {
+                                layer.close(layerid);
+                                table.reload("beauticianReload");
+                            }
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+
+
+        var $ = layui.$, active = {
+            search: function () {
+                var storeId = $(".demoTable select[name='stores'] option:selected").val();
+                var keyWordStaffNumber = $(".demoTable input[name='keyWordStaffNumber']").val();
+                var keyWordName = $(".demoTable input[name='keyWordName']").val();
+                table.render({
+                    elem: '#beautician'
+                    , url: storeHost + "/manage/beautician/selectBeauticianList"
+                    , cellMinWidth: 60 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                    , page: true          //显示分页默认不显示
+                    , method: 'post'
+                    , id: 'beauticianReload'
+                    , request: {
+                        pageName: 'pageNum', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    }
+                    , where: {
+                        keyWordStaffNumber: keyWordStaffNumber,
+                        keyWordName: keyWordName,
+                        storeId: storeId,
+                        companyType: "${currentUser.companyType!}",
+                        companyId: "${currentUser.companyId!}"
+                    }
+                    , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                        return {
+                            "code": 0, //解析接口状态
+                            "msg": "", //解析提示文本
+                            "count": res.result == null ? 0 : res.result.total, //解析数据长度
+                            "data": res.result == null ? 0 : res.result //解析数据列表
+                        };
+                    }
+                    , cols: [[
+                        {type: 'checkbox', fixed: 'left', width: 40}
+                        , {
+                            field: 'headUrl', title: '美容师头像', fixed: 'left', templet: function (d) {
+                                return d.headUrl == "" || d.headUrl == null ? "<div><img src='/noImg.png' style='width:60px;height: 60px'></div>" : "<div><img src=" + d.headUrl + " style='width:60px;height: 60px'></div>"
+                            }
+                        }
+                        , {field: 'name', title: '美容师名称', fixed: 'left'}
+                        , {field: 'staffNumber', title: '员工号码'}
+                        , {field: 'introduction', title: '人物简介'}
+                        , {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
+                    ]]
+                });
+            }
+            , add: function () {
+
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+
+    //添加按钮点击事件-打开添加窗口
+    $("#add").click(function () {
+        $("#reset").click();//重置表单(新建时在进入表单前要重置一下表单的内容，不然表单打开后会显示上一次的表单的内容。这里调用表单中重置按钮的点击方法来重置)
+        layerid = layer.open({//开启表单弹层
+            skin: 'layui-layer-molv',
+            area: '60%',
+            type: 1,
+            title: '新建员工',
+            content: $('#addformdivid'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            success: function () {
+                $("#demo1").attr("src", "${basePath!}/noImg.png")
+                loadPostCategoryForAdd()
+                loadGroupForAdd();
+                loadShopForAdd();
+            }
+
+        });
+    });
+
+    //修改美容师按钮事件-打开修改窗口
+    function layerShowAndEdit(form, data, table, $) {
+        //页面弹框
+        layerid = layer.open({
+            type: 1,
+            title: '员工修改',
+            content: $('#editformdivid'),
+            area: ['600px', '700px'],
+            closeBtn: 1,
+            scrollbar: true,
+            btn: [],
+            yes: function (index, layero) {
+
+            },
+            btn2: function () {
+                layer.closeAll();
+            },
+            success: function (layero) {
+                form.val('exampleEdit', {
+                    "beauticianId": data.beauticianId
+                    , "name": data.name
+                    , "mobile": data.mobile
+                    , "gender": data.gender
+                    , "entryTime": data.entryTime
+                    , "storeId": data.storeId
+                    , "groupId": data.groupId
+                    , "postId": data.postId
+                    , "postCategoryId": data.postCategoryId
+                    , "isSkipTurn": data.isSkipTurn
+                    , "tactGrade": data.tactGrade
+                    , "skillGrade": data.skillGrade
+                    , "sort": data.sort
+                    , "workingState": data.workingState
+                    , "introduction": data.introduction
+                    , "isPartTime": data.isPartTime
+                    , "isBasicSalary": data.isBasicSalary
+                });
+                //头像地址-赋值
+                layero.find("img[id='demo2']").attr("src", (data.headUrl == null || data.headUrl == "") ? "${basePath!}/noImg.png" : data.headUrl);
+                layui.form.render();
+            }
+
+        });
+    }
+
+    //删除美容师按钮事件
+    function layerDelete(data, table, $) {
+        //删除数据库数据
+        var url = storeHost + "/manage/beautician/deleteBeautician";
+        var data = {
+            beauticianIds: data.beauticianId,
+            modifyOperator: "${currentUser.trueName!}"
+        };
+        $.post(url, data, function (res) {
+            if (res.responseStatusType.message == "Success") {
+                layer.open({
+                    title: '删除'
+                    , content: '删除成功！'
+                });
+                //重新加载表格
+                table.reload("beauticianReload");
+            } else {
+                layer.open({
+                    title: '删除'
+                    , content: '删除失败！'
+                });
+            }
+        })
+    }
+
+
+    //绑定授权项目事件
+    function bindingProject(datas, table, $) {
+        isFind = 0;
+        var a3 = layer.open({
+            type: 1,
+            title: '护理项目',
+            area: ['740px', '500px'],
+            closeBtn: 1,
+            scrollbar: true,
+            content: '<div class="demoTableSerch layui-form">\n' +
+                '    <div class="layui-form-item">\n' +
+                '        <div class="layui-inline">\n' +
+                '            <label class="layui-form-label">商品名称</label>\n' +
+                '            <div class="layui-input-inline">\n' +
+                '                <input class="layui-input" type="text" name="keyWordProductName" autocomplete="off"\n' +
+                '                       placeholder="输入商品名称">\n' +
+                '            </div>\n' +
+                '            <label class="layui-form-label">商品号</label>\n' +
+                '            <div class="layui-input-inline">\n' +
+                '                <input class="layui-input" type="text" name="keyWordProductCode" autocomplete="off" placeholder="输入商品号">\n' +
+                '            </div>\n' +
+                '        </div>\n' +
+                '        <div class="layui-inline">\n' +
+                '            <button class="layui-btn"  id="find"><i class="layui-icon layui-icon-search"></i></button>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '</div>' +
+                '<table id="selectProject" lay-filter="selectProjectDemo"></table>',
+            btn: ['提交', '取消'],
+            yes: function (index, layero) {
+                var url = storeHost + "/manage/beautician/insertProjectToBeautician";//添加授权
+                var params = {
+                    beauticianId: datas.beauticianId,
+                    projects: JSON.stringify(selectBoxsAll)
+                };
+                $.post(url, params, function (res) {
+                    if (res.responseStatusType.message == "Success") {
+                        layer.open({
+                            title: '授权'
+                            , content: '授权成功！'
+                            , btn: ["关闭"]
+                            , yes: function (index) {
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                layer.close(a3);
+                            }
+                        });
+                    } else {
+
+                    }
+                })
+            },
+            btn2: function () {
+                layer.closeAll();
+            },
+            success: function (layero, index) {
+
+                /*----------------渲染表格数据-------------------*/
+                layui.use('table', function () {
+                    var table = layui.table;
+                    var $ = layui.jquery;
+                    table = $.extend(table, {config: {checkName: 'isChecked'}});
+                    table.render({
+                        elem: layero.find('#selectProject')
+                        , url: storeHost + "/manage/beautician/selectProject"
+                        , cellMinWidth: 60 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                        , page: true          //显示分页默认不显示
+                        , method: 'post'
+                        , request: {
+                            pageName: 'pageNum', //页码的参数名称，默认：page
+                            limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                        }
+                        , where: {
+                            beauticianId: datas.beauticianId
+                        }
+                        , id: "allDataTable"
+                        , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                            return {
+                                "code": 0, //解析接口状态
+                                "msg": "暂无授权项目", //解析提示文本
+                                "count": res.result == null ? 0 : res.result.total, //解析数据长度
+                                "data": res.result == null ? 0 : res.result.list //解析数据列表
+                            };
+                        }
+                        , cols: [[
+                            {type: 'checkbox', fixed: 'left', width: 100}
+                            , {field: 'serviceProductId', title: '项目id', sort: true}
+                            , {field: 'productCode', title: '商品编号'}
+                            , {field: 'productName', title: '项目名称'}
+                            , {field: 'isChecked', title: '是否选择'}
+                        ]],
+                        done: function (res, curr, count) {
+                            resultDataAll = res.data;
+                            selectBoxsAll = new Array();
+                            var checkStatus = table.checkStatus('allDataTable')
+                                , data = checkStatus.data;
+                            for (var p in data) {
+                                //加入所有选中项目
+                                selectBoxsAll.push(data[p].serviceProductId)
+                            }
+                        }
+                    });
+
+                });
+                /*----------------渲染表格数据-------------------*/
+
+
+                /*----------------给搜索按钮绑定事件-------------------*/
+                layui.use('layer', function () {
+                    var $ = layui.jquery, layer = layui.layer;
+                    $(document).on('click', '#find', function () {
+                        isFind = 1;
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            var $ = layui.jquery;
+                            table = $.extend(table, {config: {checkName: 'isChecked'}});
+                            var keyWordProductName = $(".demoTableSerch input[name='keyWordProductName']").val();
+                            var keyWordProductCode = $(".demoTableSerch input[name='keyWordProductCode']").val();
+                            table.render({
+                                elem: layero.find('#selectProject')
+                                , url: storeHost + "/manage/beautician/selectProject"
+                                , cellMinWidth: 60 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                                , page: true          //显示分页默认不显示
+                                , method: 'post'
+                                , request: {
+                                    pageName: 'pageNum', //页码的参数名称，默认：page
+                                    limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                                }
+                                , id: "searchDataTable"
+                                , where: {
+                                    keyWordProductName: keyWordProductName,
+                                    keyWordProductCode: keyWordProductCode,
+                                    beauticianId: datas.beauticianId
+                                }
+                                , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                                    return {
+                                        "code": 0, //解析接口状态
+                                        "msg": "暂无授权项目", //解析提示文本
+                                        "count": res.result == null ? 0 : res.result.total, //解析数据长度
+                                        "data": res.result == null ? 0 : res.result.list //解析数据列表
+                                    };
+                                }
+                                , cols: [[
+                                    {type: 'checkbox', fixed: 'left', width: 100}
+                                    , {field: 'serviceProductId', title: '项目id', sort: true}
+                                    , {field: 'productCode', title: '商品编号'}
+                                    , {field: 'productName', title: '项目名称'}
+                                    , {field: 'isChecked', title: '是否选择'}
+                                ]],
+                                done: function (res, curr, count) {
+                                    resultDataAllSearch = res.data;
+                                }
+                            });
+                        });
+                    });
+                });
+                /*----------------给搜索按钮绑定事件-------------------*/
+            }
+        });
+
+    }
+
+
+    var currentBeauticianId = "";
+    var currentDate = "";
+    var leisureTimeNodesArray = new Array();
+    var busyTimeNodesArray = new Array();
+    var restTimeNodesArray = new Array();
+    var a4;
+
+    //排班事件
+    function orderwork(datas, table, $) {
+        isFind = 0;
+        a4 = layer.open({
+            type: 1,
+            title: '排班管理',
+            area: ['740px', '600px'],
+            closeBtn: 1,
+            scrollbar: true,
+            content: $(".orderworkDate"),
+            btn: ['提交', '取消'],
+            yes: function (index, layero) {
+                /*------------获取三种状态时间节点的数组-------------*/
+                var leisureTimeNodesArrayAdd = new Array();
+                var busyTimeNodesArrayAdd = new Array();
+                var restTimeNodesArrayAdd = new Array();
+                $(".orderworkDate input[name='check']").each(function (i) {
+                    if ($(this).attr("data-type") == 1) {
+                        leisureTimeNodesArrayAdd.push($(this).next().text())
+                    } else if ($(this).attr("data-type") == 2) {
+                        busyTimeNodesArrayAdd.push($(this).next().text())
+                    } else if ($(this).attr("data-type") == 3) {
+                        restTimeNodesArrayAdd.push($(this).next().text())
+                    }
+                })
+
+                /*------------获取三种状态时间节点的数组-------------*/
+
+                var url = storeHost + "/manage/orderwork/updateOrderwork";//添加或修改排班
+                var params = {
+                    beauticianId: currentBeauticianId,
+                    orderworkDate: currentDate,
+                    leisureTimeNodes: JSON.stringify(leisureTimeNodesArrayAdd),
+                    busyTimeNodes: JSON.stringify(busyTimeNodesArrayAdd),
+                    restTimeNodes: JSON.stringify(restTimeNodesArrayAdd)
+                };
+                $.post(url, params, function (res) {
+                    if (res.responseStatusType.message == "Success") {
+                        layer.open({
+                            title: '排班'
+                            , content: '排班成功！'
+                            , btn: ["关闭"]
+                            , yes: function (index) {
+                                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                layer.close(a4);
+                            }
+                        });
+                    } else {
+
+                    }
+                })
+            },
+            btn2: function () {
+                layer.closeAll();
+                $(".orderworkDate input[name='check']").parent().css("background-color", "rgb(90, 124, 72)");
+                $(".orderworkDate input[name='check']").attr("data-type", 1);
+            },
+            success: function (layero, index) {
+                $(".nore").css("display", "none")
+                $(".basetime").attr("readonly", "readonly");
+                $(".orderworkDate input[name='check']").parent().css("background-color", "rgb(90, 124, 72)");
+                $(".orderworkDate input[name='check']").attr("data-type", 1);
+                currentBeauticianId = datas.beauticianId;
+            }
+        });
+
+    }
+
+    //时间状态管理事件
+    function timeStatus(data) {
+        if (data == 1) { //空闲
+            $(".orderworkDate input[name='check']:checked").each(function (i) {
+                $(this).parent().css("background-color", '#5A7C48');
+                $(this).attr("checked", false)
+                $(this).attr("data-type", 1)
+            })
+
+        } else if (data == 2) {//忙碌
+            $(".orderworkDate input[name='check']:checked").each(function (i) {
+                $(this).parent().css("background-color", '#F58100')
+                $(this).attr("checked", false)
+                $(this).attr("data-type", 2)
+            })
+        } else if (data == 3) {//休息
+            $(".orderworkDate input[name='check']:checked").each(function (i) {
+                $(this).parent().css("background-color", '#B2B2B2')
+                $(this).attr("checked", false)
+                $(this).attr("data-type", 3)
+            })
+        }
+
+    }
+
+    //批量修改时间状态按钮事件
+    function moreTime() {
+        var beginTimeValue = $("select[name='begin_time'] option:checked").val();
+        var endTimeValue = $("select[name='end_time'] option:checked").val();
+        var timeStatus = $("select[name='time_status'] option:checked").val();
+        if (eval(endTimeValue) == 0 || eval(beginTimeValue) == 0) {
+            alert("起始时间或结束时间不能为空")
+            return;
+        }
+        if (eval(endTimeValue) < eval(beginTimeValue)) {
+            alert("起始时间不能大于结束时间")
+            return;
+        }
+
+        if (eval(timeStatus) == 0) {
+            alert("请选择时间状态")
+            return;
+        }
+        //给时间范围内的节点赋值
+        $(".orderworkDate input[name='check']").each(function () {
+            if ($(this).val() <= eval(endTimeValue) && $(this).val() >= beginTimeValue) {
+                if (eval(timeStatus) == 1) {
+                    $(this).parent().css("background-color", "#5A7C48");
+                    $(this).attr("data-type", "1");
+                } else if (eval(timeStatus) == 2) {
+                    $(this).parent().css("background-color", "#F58100");
+                    $(this).attr("data-type", "2");
+                } else if (eval(timeStatus) == 3) {
+                    $(this).parent().css("background-color", "#B2B2B2");
+                    $(this).attr("data-type", "3");
+                }
+            }
+        })
+
+    }
+
+    //删除排班事件
+    function deleteOrderWork(data) {
+        var url = storeHost + "/manage/orderwork/deleteOrderwork";//删除排班
+        var params = {
+            beauticianId: currentBeauticianId,
+            orderworkDate: currentDate
+        };
+        $.post(url, params, function (res) {
+            if (res.responseStatusType.message == "Success") {
+                layer.open({
+                    title: '删除排班'
+                    , content: '删除成功！'
+                    , btn: ["关闭"]
+                    , yes: function (index) {
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                        layer.close(a4);
+                    }
+                });
+            } else {
+                layer.msg(res.responseStatusType.error.errorMsg)
+            }
+        })
+
+    }
+
+
+    //查看美容师按钮事件
+    function layerShow(form, data, table, $) {
+        //页面弹框
+        layerid = layer.open({
+            type: 1,
+            title: '店铺详情',
+            content: $('#editformdivid'),
+            scrollbar: true,
+            area: ['600px', '700px'],
+            closeBtn: 1,
+            btn: ['关闭'],
+            btn2: function () {
+                layer.close(a2)
+            },
+            success: function (layero) {
+                form.val('exampleEdit', {
+                    "beauticianId": data.beauticianId
+                    , "name": data.name
+                    , "mobile": data.mobile
+                    , "gender": data.gender
+                    , "entryTime": data.entryTime
+                    , "storeId": data.storeId
+                    , "groupId": data.groupId
+                    , "postId": data.postId
+                    , "postCategoryId": data.postCategoryId
+                    , "isSkipTurn": data.isSkipTurn
+                    , "tactGrade": data.tactGrade
+                    , "skillGrade": data.skillGrade
+                    , "sort": data.sort
+                    , "workingState": data.workingState
+                    , "introduction": data.introduction
+                    , "isPartTime": data.isPartTime
+                });
+                //头像地址-赋值
+                layero.find("img[id='demo2']").attr("src", (data.headUrl == null || data.headUrl == "") ? "${basePath!}/noImg.png" : data.headUrl);
+                layui.form.render();
+            }
+        });
+    }
+
+
+    //加载店铺信息-修改查看中初始化
+    function loadShop(datas) {
+        //加载店铺列表信息
+        var url = storeHost + "/manage/store/selectStoreList";
+        var data = {companyType: "${currentUser.companyType!}", companyId: "${currentUser.companyId!}"};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result.list;    //返回的数据
+                var server = document.getElementById("store"); //server为select定义的id
+                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
+                for (var p in list) {
+                    var option = document.createElement("option");  // 创建添加option属性
+                    option.setAttribute("value", list[p].storeId); // 给option的value添加值
+                    option.innerText = list[p].name;     // 打印option对应的纯文本
+                    server.appendChild(option);           //给select添加option子标签
+                    if (datas.storeId == option.getAttribute("value")) {
+                        option.setAttribute("selected", true)
+                    }
+                }
+                layui.form.render();
+            } else {
+
+            }
+        })
+    }
+
+    //加载店铺信息-添加中初始化
+    function loadShopForAdd() {
+        //加载店铺列表信息
+        var url = storeHost + "/manage/store/selectStoreList";
+        var data = {companyType: "${currentUser.companyType!}", companyId: "${currentUser.companyId!}"};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result.list;    //返回的数据
+                var server = document.getElementById("storeAdd"); //server为select定义的id
+                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
+                for (var p in list) {
+                    var option = document.createElement("option");  // 创建添加option属性
+                    option.setAttribute("value", list[p].storeId); // 给option的value添加值
+                    option.innerText = list[p].name;     // 打印option对应的纯文本
+                    server.appendChild(option);           //给select添加option子标签
+                }
+                layui.form.render();
+            } else {
+
+            }
+        })
+    }
+
+    //加载分组信息-修改查看中初始化
+    function loadGroup(datas) {
+        //加载店铺列表信息
+        var url = storeHost + "/manage/beautician/selectGroup";
+        var data = {};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result.list;    //返回的数据
+                var server = document.getElementById("groupId"); //server为select定义的id
+                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
+                for (var p in list) {
+                    var option = document.createElement("option");  // 创建添加option属性
+                    option.setAttribute("value", list[p].groupId); // 给option的value添加值
+                    option.innerText = list[p].name;     // 打印option对应的纯文本
+                    server.appendChild(option);           //给select添加option子标签
+                    if (datas.groupId == option.getAttribute("value")) {
+                        option.setAttribute("selected", true)
+                    }
+                }
+                layui.form.render();
+            } else {
+
+            }
+        })
+    }
+
+    //加载分组信息-添加中初始化
+    function loadGroupForAdd() {
+        //加载店铺列表信息
+        var url = storeHost + "/manage/beautician/selectGroup";
+        var data = {};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result.list;    //返回的数据
+                var server = document.getElementById("groupIdAdd"); //server为select定义的id
+                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
+                for (var p in list) {
+                    var option = document.createElement("option");  // 创建添加option属性
+                    option.setAttribute("value", list[p].groupId); // 给option的value添加值
+                    option.innerText = list[p].name;     // 打印option对应的纯文本
+                    server.appendChild(option);           //给select添加option子标签
+                }
+                layui.form.render();
+            } else {
+
+            }
+        })
+    }
+
+
+    //加载职位分组信息-修改查看中初始化
+    function loadPostCategory(form) {
+        var url = storeHost + "/manage/industry/selectListIndustryNoPage";
+        var data = {};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result;    //返回的数据
+                var server = document.getElementById("postCategoryId"); //server为select定义的id
+                server.innerHTML = "<option value=''>直接选择或搜索选择</option>";
+                for (var p in list) {
+                    var optgroup = document.createElement("optgroup");  // 创建添加optgroup属性
+                    optgroup.setAttribute("label", list[p].industryName); // 给optgroup的label添加值
+                    var postCategoryList = list[p].postCategoryList;
+                    for (var n in postCategoryList) {
+                        var option = document.createElement("option");  // 创建添加option属性
+                        option.setAttribute("value", postCategoryList[n].postCategoryId); // 给option的value添加值
+                        option.innerText = postCategoryList[n].name;     // 打印option对应的纯文本
+                        optgroup.appendChild(option)
+                    }
+                    server.appendChild(optgroup);           //给select添加option子标签
+                }
+            } else {
+
+            }
+            form.render();
+        });
+    }
+
+
+    //加载职位分组信息-添加中初始化
+    function loadPostCategoryForAdd(form) {
+        var url = storeHost + "/manage/industry/selectListIndustryNoPage";
+        var data = {};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result;    //返回的数据
+                var server = document.getElementById("postCategoryIdAdd"); //server为select定义的id
+                server.innerHTML = "<option value=''>直接选择或搜索选择</option>";
+                for (var p in list) {
+                    var optgroup = document.createElement("optgroup");  // 创建添加optgroup属性
+                    optgroup.setAttribute("label", list[p].industryName); // 给optgroup的label添加值
+                    var postCategoryList = list[p].postCategoryList;
+                    for (var n in postCategoryList) {
+                        var option = document.createElement("option");  // 创建添加option属性
+                        option.setAttribute("value", postCategoryList[n].postCategoryId); // 给option的value添加值
+                        option.innerText = postCategoryList[n].name;     // 打印option对应的纯文本
+                        optgroup.appendChild(option)
+                    }
+                    server.appendChild(optgroup);           //给select添加option子标签
+                }
+
+            } else {
+
+            }
+            form.render();
+        });
+    }
+
+
+    //加载职位信息-修改查看中初始化
+    function loadPost(postCategoryId) {
+        //加载店铺列表信息
+        var url = storeHost + "/manage/beautician/selectPostNoPage";
+        var data = {"postCategoryId": postCategoryId};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result;    //返回的数据
+                var server = document.getElementById("postId"); //server为select定义的id
+                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
+                for (var p in list) {
+                    var option = document.createElement("option");  // 创建添加option属性
+                    option.setAttribute("value", list[p].postId); // 给option的value添加值
+                    option.innerText = list[p].name;     // 打印option对应的纯文本
+                    server.appendChild(option);           //给select添加option子标签
+                }
+
+            } else {
+
+            }
+            layui.form.render();
+        })
+    }
+
+    //加载职位信息-添加查看中初始化
+    function loadPostForAdd(postCategoryId) {
+        //加载店铺列表信息
+        var url = storeHost + "/manage/beautician/selectPostNoPage";
+        var data = {"postCategoryId": postCategoryId};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result;    //返回的数据
+                var server = document.getElementById("postIdAdd"); //server为select定义的id
+                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
+                for (var p in list) {
+                    var option = document.createElement("option");  // 创建添加option属性
+                    option.setAttribute("value", list[p].postId); // 给option的value添加值
+                    option.innerText = list[p].name;     // 打印option对应的纯文本
+                    server.appendChild(option);           //给select添加option子标签
+                }
+                layui.form.render();
+            } else {
+
+            }
+            layui.form.render();
+        })
+    }
+</script>
+
+
+<script>
+    //关于时间范围的js
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //时间范围
+        laydate.render({
+            elem: '#shopBusinessTime'
+            , type: 'time'
+            , range: true
+        });
+        //日期时间选择器-添加
+        laydate.render({
+            elem: '#entryTimeAdd'
+            , type: 'datetime'
+        });
+        //日期时间选择器-修改
+        laydate.render({
+            elem: '#entryTime'
+            , type: 'datetime'
+        });
+        //常规用法
+        laydate.render({
+            elem: '#normalDate'
+            , done: function (value, date) {
+                /*  layer.msg('你选择的日期是：' + value + '<br><br>获得的对象是' + JSON.stringify(date));*/
+                currentDate = value;
+                $(".nore").css("display", "block")
+                /*---------------初始化数据------------------*/
+                var url = storeHost + "/manage/orderwork/selectOrderwork";
+                var params = {
+                    beauticianId: currentBeauticianId,
+                    orderworkDate: value
+                };
+                $.post(url, params, function (res) {
+                    if (res.responseStatusType.message == "Success") {
+                        leisureTimeNodesArray = JSON.parse(res.result.leisureTimeNodes);
+                        busyTimeNodesArray = JSON.parse(res.result.busyTimeNodes);
+                        restTimeNodesArray = JSON.parse(res.result.restTimeNodes);
+                        //给多选框赋值
+                        $(".orderworkDate input[name='check']").each(function (i) {
+                            for (var item in leisureTimeNodesArray) {
+                                if ($(this).next().text() == leisureTimeNodesArray[item]) {
+                                    $(this).parent().css("background-color", '#5A7C48');
+                                    $(this).attr("data-type", "1");
+                                }
+                            }
+                            for (var item in busyTimeNodesArray) {
+                                if ($(this).next().text() == busyTimeNodesArray[item]) {
+                                    $(this).parent().css("background-color", '#F58100');
+                                    $(this).attr("data-type", "2");
+                                }
+                            }
+                            for (var item in restTimeNodesArray) {
+                                if ($(this).next().text() == restTimeNodesArray[item]) {
+                                    $(this).parent().css("background-color", '#B2B2B2');
+                                    $(this).attr("data-type", "3");
+                                }
+                            }
+                        })
+                    } else {
+                        $(".orderworkDate input[name='check']").each(function () {
+                            $(this).parent().css("background-color", "#5A7C48");
+                            $(this).attr("data-type", "1");
+                        })
+                        layer.msg(res.responseStatusType.error.errorMsg, {
+                            time: 20000, //20s后自动关闭
+                            btn: ['明白了']
+                        });
+                    }
+                })
+                /*---------------初始化数据------------------*/
+            }
+        });
+    });
+</script>
+
+
+<script>
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+
+        //普通图片上传--添加
+        var uploadInst1 = upload.render({
+            elem: '#test1'
+            , url: storeHost + "/manage/beautician/uploadBeauticianImg"
+            , auto: false
+            , bindAction: '#startUpAdd'
+            , choose: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                resultImgUrlAdd = "http://" + res.result.imageUrl
+                layer.msg('上传成功');
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst1.upload();
+                });
+            }
+        });
+
+
+        //普通图片上传--修改
+        var uploadInst2 = upload.render({
+            elem: '#test2'
+            , url: storeHost + "/manage/beautician/uploadBeauticianImg"
+            , auto: false
+            , bindAction: '#startUp'
+            , choose: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo2').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                resultImgUrl = "http://" + res.result.imageUrl
+                layer.msg('上传成功');
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText2 = $('#demoText2');
+                demoText2.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText2.find('.demo-reload').on('click', function () {
+                    uploadInst2.upload();
+                });
+            }
+        });
+    });
+
+</script>
+
+<script>
+    //数组合并并去重
+    function concat(resultDataSelected, resultDataAllSearchSelected) {
+        var length1 = resultDataSelected.length;
+        var length2 = resultDataAllSearchSelected.length;
+        for (var i = 0; i < length1; i++) {
+            for (var j = 0; j < length2; j++) {
+                //判断添加的数组是否为空了
+                if (resultDataSelected.length > 0) {
+                    if (resultDataSelected[i] == resultDataSelected[j]) {
+                        resultDataSelected.splice(i, 1); //利用splice函数删除元素，从第i个位置，截取长度为1的元素
+                        length1--;
+                    }
+                }
+            }
+        }
+        for (var n = 0; n < resultDataAllSearchSelected.length; n++) {
+            resultDataSelected.push(resultDataAllSearchSelected[n]);
+        }
+        return resultDataSelected;
+    }
+
+    //初始化子公司分组列表
+    function loadSubCompanyStore(form) {
+        var url = storeHost + "/manage/store/selectSubCompanyAndStoreNoPage";
+        var data = {companyId: "${currentUser.companyId!}", companyType: "${currentUser.companyType!}"};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result;    //返回的数据
+                var server = document.getElementById("stores"); //server为select定义的id
+                server.innerHTML = "<option value='0' selected='selected'>直接选择或搜索选择</option>";
+                for (var p in list) {
+                    var optgroup = document.createElement("optgroup");  // 创建添加optgroup属性
+                    optgroup.setAttribute("label", list[p].subsidiaryName); // 给optgroup的label添加值
+                    var storeVOList = list[p].storeVOList;
+                    for (var n in storeVOList) {
+                        var option = document.createElement("option");  // 创建添加option属性
+                        option.setAttribute("value", storeVOList[n].storeId); // 给option的value添加值
+                        option.innerText = storeVOList[n].name;     // 打印option对应的纯文本
+                        optgroup.appendChild(option)
+                    }
+                    server.appendChild(optgroup);           //给select添加option子标签
+                }
+                form.render();
+            } else {
+
+            }
+        })
+    }
+</script>
+
+</body>
+</html>
