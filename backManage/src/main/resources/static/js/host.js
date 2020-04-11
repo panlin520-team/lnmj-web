@@ -17,7 +17,7 @@ var orderHost = "http://47.108.29.183:85";
 var productHost = "http://47.108.29.183:84";
 var payHost = "http://47.108.29.183:90";
 var systemHost = "http://47.108.29.183:91";*/
-var ip = "http://192.168.100.3";
+var ip = "http://192.168.68.188";
 
 var authHost = ip+":83";
 var accountHost = ip+":82";

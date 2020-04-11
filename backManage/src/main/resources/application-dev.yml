@@ -28,13 +28,13 @@ logging:
   file: logs/sql-log.log
 eureka:
   instance:
-    ip-address: 192.168.100.3
+    ip-address: 192.168.68.188
     prefer-ip-address: true
   client:
     register-with-eureka: true #暂时停止注册服务
     fetch-registry: true #暂时停止注册服务
     service-url:
-      defaultZone: http://192.168.100.3:81/eureka/ #需要将服务注册到那个注册中心（地址）去
+      defaultZone: http://192.168.68.188:81/eureka/ #需要将服务注册到那个注册中心（地址）去
 server:
   port: 92  #自身服务端口
 oauth2:
