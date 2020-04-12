@@ -227,6 +227,21 @@
 
                             }
                         }
+                        , {
+                            field: 'inventoryWay', title: '入库方向', templet: function (d) {
+                                var inventoryWayName = "";
+                                if (d.inventoryWay == "RETURN") {
+                                    inventoryWayName = "退货";
+                                    return "<span>" + inventoryWayName + "</span>"
+                                } else if (d.inventoryWay == "GENERAL") {
+                                    inventoryWayName = "普通";
+                                    return "<span>" + inventoryWayName + "</span>"
+                                } else if (d.inventoryWay === '') {
+                                    inventoryWayName = "普通";
+                                    return "<span>" + inventoryWayName + "</span>"
+                                }
+                            }
+                        }
                        /* ,{field: 'auditorTime', title: '审核时间'}*/
                     ]]
                 });

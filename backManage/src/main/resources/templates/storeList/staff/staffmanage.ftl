@@ -2042,7 +2042,7 @@
                             , cols: [[
                                 {field: 'achievementPostName', title: '业绩名称'}
                                 , {field: 'amountOrNumber', title: '金额/个数'}
-
+                                , {field: 'type', title: '业绩统计方式'}
                             ]]
                         });
                     });
@@ -2244,8 +2244,8 @@
                                                         , "staffName": dataStaff.name  //员工名称
                                                         , "statisticDateStart": result.result.statisticDateStart  // 统计开始时间
                                                         , "statisticDateEnd": result.result.statisticDateEnd  // 统计结束时间
-                                                        , "numberPerformance": result.result.numberPerformance   //个数业绩
-                                                        , "amountPerformance": result.result.amountPerformance   //金额业绩
+                                                        , "numberPerformance": result.result.numberPerformanceAll   //个数业绩
+                                                        , "amountPerformance": result.result.amountPerformanceAll   //金额业绩
                                                         , "score": result.result.score    //分数
                                                         , "salary": result.result.salary     //工资
                                                         , "baseSalary": result.result.baseSalary    //底薪
@@ -2324,7 +2324,7 @@
                                         skin: 'layui-layer-molv',
                                         type: 1,
                                         area: "10%",
-                                        content: "操作成功:" + data.result.message,
+                                        content: "操作成功:",
                                         shadeClose: true,
                                         btn: ["关闭"],
                                         yes: function (index) {
@@ -2374,7 +2374,7 @@
                                 skin: 'layui-layer-molv',
                                 type: 1,
                                 area: "10%",
-                                content: "操作成功:" + data.result.message,
+                                content: "操作成功:",
                                 shadeClose: true,
                                 btn: ["关闭"],
                                 yes: function (index) {
