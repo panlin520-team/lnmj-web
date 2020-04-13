@@ -129,10 +129,6 @@
     <div class="layui-form-item">
         <label class="layui-form-label xrequired">职位分类</label>
         <div class="layui-input-block" style="width:150px;">
-            <#--<select name="postCategoryId" id="postCategoryIdFgs" lay-filter="postCategoryId" lay-verify="required"-->
-            <#--lay-search="">-->
-            <#--</select>-->
-
             <input name="postCategoryIdAddShow" id="postCategoryIdAddShowfgs" readonly="readonly" type="text"
                    autocomplete="off" placeholder="请输入职位分类" class="layui-input"
                    style="padding-right: 0px;width: 144px;height: 38px;padding-left: 0px;"
@@ -148,9 +144,6 @@
     <div class="layui-form-item">
         <label class="layui-form-label xrequired">所属部门</label>
         <div class="layui-input-block" style="width:150px;">
-            <#--<select name="departmentId" id="departmentId" lay-filter="departmentId" lay-verify="required">-->
-            <#--</select>-->
-
             <input name="departmentIdAddShow" id="departmentIdAddShowfgs" readonly="readonly" type="text"
                    autocomplete="off" placeholder="请输入所属部门" class="layui-input"
                    style="padding-right: 0px;width: 144px;height: 38px;padding-left: 0px;"
@@ -192,11 +185,23 @@
 
 
     <div class="layui-form-item">
+        <label class="layui-form-label">所属行业</label>
+        <div class="layui-input-inline">
+            <input name="industryIDAddShow" id="industryIDAddShow" readonly="readonly"
+                   type="text"
+                   autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                    <#-- lay-verify="required"-->>
+            <input name="industryID" id="industryIDAdd" hidden="true" type="text">
+            <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachIndustryIDAdd"><i
+                        class="layui-icon layui-icon-search"></i></button>
+
+        </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label xrequired">职位分类</label>
         <div class="layui-input-block" style="width:150px;">
-            <#--<select name="postCategoryId" id="postCategoryIdZgs" lay-filter="postCategoryId" lay-verify="required"-->
-            <#--lay-search="">-->
-            <#--</select>-->
             <input name="postCategoryIdAddShow" id="postCategoryIdAddShow" readonly="readonly" type="text"
                    autocomplete="off" placeholder="请输入门店所属分类" class="layui-input"
                    style="padding-right: 0px;width: 144px;height: 38px;padding-left: 0px;"
@@ -211,9 +216,6 @@
     <div class="layui-form-item">
         <label class="layui-form-label xrequired">所属部门</label>
         <div class="layui-input-block" style="width:150px;">
-            <#--<select name="departmentId" id="departmentIdZgs" lay-filter="departmentId" lay-verify="required">-->
-            <#--</select>-->
-
             <input name="departmentIdAddShow" id="departmentIdAddShow" readonly="readonly" type="text"
                    autocomplete="off" placeholder="请输入门店所属分类" class="layui-input"
                    style="padding-right: 0px;width: 144px;height: 38px;padding-left: 0px;"
@@ -270,6 +272,21 @@
         </div>
     </div>
 
+    <div class="layui-form-item" id="industryIDEditShowDiv">
+        <label class="layui-form-label">所属行业</label>
+        <div class="layui-input-inline">
+            <input name="industryIDEditShow" id="industryIDEditShow" readonly="readonly"
+                   type="text"
+                   autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                    <#-- lay-verify="required"-->>
+            <input name="industryID" id="industryIDEdit" hidden="true" type="text">
+            <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachIndustryIDEdit"><i
+                        class="layui-icon layui-icon-search"></i></button>
+
+        </div>
+    </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label xrequired">职位分类</label>
         <div class="layui-input-block" style="width:150px;">
@@ -308,25 +325,25 @@
 
 
 <#--选择要添加岗位的类型表单-->
-<div id="companyTypePostDiv" hidden="" class="layui-fluid layui-form-pane layui-personal" style="margin: 15px;">
-    <form class="layui-form" action="" id="companyTypePostForm" lay-filter="companyTypePostForm">
-        <div class="layui-form-item">
-            <label class="layui-form-label">请选择组织类型</label>
-            <div class="layui-input-block">
-                <input type="radio" name="companyTypePost" value="1" title="子公司岗位" checked=""
-                       lay-filter="companyTypePost">
-                <input type="radio" name="companyTypePost" value="2" title="门店岗位">
+    <div id="companyTypePostDiv" hidden="" class="layui-fluid layui-form-pane layui-personal" style="margin: 15px;">
+        <form class="layui-form" action="" id="companyTypePostForm" lay-filter="companyTypePostForm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">请选择组织类型</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="companyTypePost" value="1" title="子公司岗位" checked=""
+                           lay-filter="companyTypePost">
+                    <input type="radio" name="companyTypePost" value="2" title="门店岗位">
+                </div>
             </div>
-        </div>
 
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="companyTypePostConfir">确认</button>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="companyTypePostConfir">确认</button>
+                </div>
             </div>
-        </div>
 
-    </form>
-</div>
+        </form>
+    </div>
 <#include "../../baseFtl/loadLinkData.ftl" />
 <script>
     /*----------------渲染表格数据-------------------*/
@@ -416,11 +433,48 @@
         loadIndustry(form);
         loadSubCompanyStore(form)
 
+        /*------行业关联数据查看-添加-子公司-----*/
+        $("#" + "serachIndustryIDAdd").click(function () {
+            var url = storeHost + "/manage/industry/selectList";
+            var param = {};
+            loadLinkData(layer, layui, url, "industryID", "industryName", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "industryIDAddShow").val(data.industryName);
+                $("#" + "industryIDAdd").val(data.industryID);
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var searchJsonName = {industryNameKeyword: wordSearch}
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
+        });
 
         /*------职位分类关联数据添加------*/
         $("#" + "serachpostCategoryIdAdd").click(function () {
             var url = storeHost + "/manage/beautician/selectPostCategoryList";
-            var param = {"companyId": "${currentUser.parentCompanyId!}"};
+            var industryIDAdd = $("input[id='industryIDAdd']").val();
+            if (industryIDAdd == "" || industryIDAdd == null) {
+                layer.msg("请先选择店铺确定行业")
+                return
+            }
+            var param = {"companyId": "${currentUser.parentCompanyId!}", "postIndustryIDSearch": industryIDAdd};
             loadLinkData(layer, layui, url, "postCategoryId", "name", param);
             table.on('row(showLinDataTable)', function (obj) {
                 var data = obj.data;
@@ -433,7 +487,7 @@
             //搜索
             $("#searchwordLinkData").click(function () {
                 var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
-                var searchJsonName = {industryNameKeyword: wordSearch}
+                var searchJsonName = {industryNameKeyword: wordSearch, "postIndustryIDSearch": industryIDAdd}
                 layui.use('table', function () {
                     var table = layui.table;
                     table.reload('showLinDataTableRelod', {
@@ -585,7 +639,7 @@
             //搜索
             $("#searchwordLinkData").click(function () {
                 var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
-                var searchJsonName = {industryNameKeyword: wordSearch,"postIndustryIDSearch": industryIdAdd}
+                var searchJsonName = {industryNameKeyword: wordSearch, "postIndustryIDSearch": industryIdAdd}
                 layui.use('table', function () {
                     var table = layui.table;
                     table.reload('showLinDataTableRelod', {
@@ -652,10 +706,55 @@
             })
         });
 
+
+        /*------行业关联数据查看-修改-子公司-----*/
+        $("#" + "serachIndustryIDEdit").click(function () {
+            var url = storeHost + "/manage/industry/selectList";
+            var param = {};
+            loadLinkData(layer, layui, url, "industryID", "industryName", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "industryIDEditShow").val(data.industryName);
+                $("#" + "industryIDEdit").val(data.industryID);
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var searchJsonName = {industryNameKeyword: wordSearch}
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
+        });
+
         /*------职位分类关联数据查看/编辑------*/
         $("#" + "serachpostCategoryIdShowAndEdit").click(function () {
             var url = storeHost + "/manage/beautician/selectPostCategoryList";
-            var param = {"companyId": "${currentUser.parentCompanyId!}"};
+            var companyType = $("#editForm").attr("data-companyType");
+            var industryIDEdit = null;
+            if (companyType == 2) {
+                industryIDEdit = $("input[id='industryIDEdit']").val();
+                if (industryIDEdit == "" || industryIDEdit == null) {
+                    layer.msg("请先选择店铺确定行业")
+                    return
+                }
+            } else if (companyType == 3) {
+                 industryIDEdit = $("#editForm").attr("data-IndustryID");
+            }
+            var param = {"companyId": "${currentUser.parentCompanyId!}", "postIndustryIDSearch": industryIDEdit};
             loadLinkData(layer, layui, url, "postCategoryId", "name", param);
             table.on('row(showLinDataTable)', function (obj) {
                 var data = obj.data;
@@ -668,7 +767,7 @@
             //搜索
             $("#searchwordLinkData").click(function () {
                 var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
-                var searchJsonName = {industryNameKeyword: wordSearch}
+                var searchJsonName = {industryNameKeyword: wordSearch, "postIndustryIDSearch": industryIDEdit}
                 layui.use('table', function () {
                     var table = layui.table;
                     table.reload('showLinDataTableRelod', {
@@ -717,8 +816,6 @@
                 $(".layui-laypage-btn").click();
             })
         });
-
-
 
 
         //监听表格复选框选择
@@ -855,8 +952,7 @@
 
         //监听修改提交
         form.on('submit(editsubmitfilter)', function (data) {
-            // var companyType =  $("#editForm").attr("companyType");
-            // var companyId =  $("#editForm").attr("companyId");
+
             //获取当前操作选择的组织机构
             var companyType = "";
             if ($('input[name="companyTypeSelect"]:checked').val() === "2") {
@@ -1081,12 +1177,21 @@
             btn2: function () {
             },
             success: function (layero) {
+                if (data.companyType == 2) {
+                    //如果是子公司
+                    $("#editForm").attr("data-companyType", 2);
+                } else if (data.companyType == 3) {
+                    //如果是分公司
+                    $("#editForm").attr("data-companyType", 3);
+                    $("#editForm").attr("data-IndustryID", data.postIndustryID);
+                }
+
                 $("#resetFgs").attr("style", "display:none;");
                 $("#showSubmit").attr("style", "display:none;");
-
-                $("#editForm").attr("companyType", data.companyType);
-                $("#editForm").attr("companyId", data.companyId);
+                $("#industryIDEditShowDiv").attr("style", "display:none;");
                 if (data.companyType == "2") {
+                    $("#industryIDEditShowDiv").attr("style", "display:block;");
+
                     $("#addAndEdit").attr("style", "display:none;");
                 }
                 //表单初始赋值
@@ -1111,11 +1216,14 @@
     function postEdit(form, data, table, $) {
 
         if (data.companyType == "2") {
+            $("#industryIDEditShowDiv").attr("style", "display:block;");
+
             $("#detailAndEditYeji").attr("style", "display:none;");
             $("#addAndEdit").attr("style", "display:none;");
             // $("#addAndEdit").removeAttr("lay-verify");
         } else {
             $("#detailAndEditYeji").attr("style", "display:block;");
+            $("#industryIDEditShowDiv").attr("style", "display:none;");
             // $("#addAndEdit").attr("style", "display:block;");
             // $("#addAndEdit").attr("lay-verify","required");
         }
@@ -1170,6 +1278,16 @@
             btn2: function () {
             },
             success: function (layero) {
+                if (data.companyType == 2) {
+                    //如果是子公司
+                    $("#editForm").attr("data-companyType", 2);
+                } else if (data.companyType == 3) {
+                    //如果是分公司
+                    $("#editForm").attr("data-companyType", 3);
+                    $("#editForm").attr("data-IndustryID", data.postIndustryID);
+                }
+                $("#industryIDEdit").val("");
+                $("#industryIDEditShow").val("");
                 $("#resetFgs").attr("style", "display:inline;");
                 123
                 $("#showSubmit").attr("style", "display:inline;");
