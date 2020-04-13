@@ -183,7 +183,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">入职时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="entryTime" class="layui-input" id="entryTimeAdd"
+                    <input type="text" name="entryTime" class="layui-input" id="entryTimeAddFgs"
                            placeholder="yyyy-MM-dd HH:mm:ss">
                 </div>
             </div>
@@ -489,7 +489,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">入职时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="entryTime" class="layui-input" id="entryTimeAdd"
+                    <input type="text" name="entryTime" class="layui-input" id="entryTimeAddZgs"
                            placeholder="yyyy-MM-dd HH:mm:ss">
                 </div>
             </div>
@@ -647,7 +647,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">入职时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="entryTime" class="layui-input" id="entryTime"
+                    <input type="text" name="entryTime" class="layui-input" id="entryTimeEditFgs"
                            placeholder="yyyy-MM-dd HH:mm:ss">
                 </div>
             </div>
@@ -923,7 +923,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">入职时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="entryTime" class="layui-input" id="entryTime"
+                    <input type="text" name="entryTime" class="layui-input" id="entryTimeEditZgs"
                            placeholder="yyyy-MM-dd HH:mm:ss">
                 </div>
             </div>
@@ -3173,12 +3173,22 @@
         });
         //日期时间选择器-添加
         laydate.render({
-            elem: '#entryTimeAdd'
+            elem: '#entryTimeAddFgs'
+            , type: 'datetime'
+        });
+        //日期时间选择器-添加
+        laydate.render({
+            elem: '#entryTimeAddZgs'
             , type: 'datetime'
         });
         //日期时间选择器-修改
         laydate.render({
-            elem: '#entryTime'
+            elem: '#entryTimeEditFgs'
+            , type: 'datetime'
+        });
+        //日期时间选择器-修改
+        laydate.render({
+            elem: '#entryTimeEditZgs'
             , type: 'datetime'
         });
         //常规用法
