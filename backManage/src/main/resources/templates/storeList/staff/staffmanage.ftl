@@ -195,7 +195,7 @@
             <div class="layui-input-inline">
                 <input name="storeAddShow" id="storeAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入店铺" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入店铺" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="companyId" id="storeAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -211,7 +211,7 @@
             <div class="layui-input-inline">
                 <input name="groupIdAddShow" id="groupIdAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入分组" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入分组" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                         <#-- lay-verify="required"-->>
                 <input name="groupId" id="groupIdAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -226,7 +226,7 @@
             <div class="layui-input-inline">
                 <input name="departmentIdFgsAddShow" id="departmentIdFgsAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="departmentId" id="departmentIdFgsAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -242,7 +242,7 @@
             <div class="layui-input-inline">
                 <input name="staffIndustryIDAddShow" id="staffIndustryIDAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                         <#-- lay-verify="required"-->>
                 <input name="staffIndustryID" id="staffIndustryIDAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -258,7 +258,7 @@
             <div class="layui-input-inline">
                 <input name="postCategoryIdAddShow" id="postCategoryIdAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="postCategoryId" id="postCategoryIdAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -274,7 +274,7 @@
             <div class="layui-input-inline">
                 <input name="postIdAddShow" id="postIdAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="postId" id="postIdAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -374,7 +374,7 @@
                         <input name="departmentIdFgsAddShowPartTime" id="departmentIdFgsAddShowPartTime"
                                readonly="readonly"
                                type="text"
-                               autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 80px;"
+                               autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                                 <#--lay-verify="required"-->>
                         <input name="departmentId" id="departmentIdFgsAddPartTime" hidden="true" type="text">
                         <button style="position: absolute;top: 0;right: 6px;
@@ -391,7 +391,7 @@
                         <input name="staffIndustryPartTimeIDAddShow" id="staffIndustryPartTimeIDAddShow"
                                readonly="readonly"
                                type="text"
-                               autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                               autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                                 <#-- lay-verify="required"-->>
                         <input name="staffIndustryPartTimeID" id="staffIndustryPartTimeIDAdd" hidden="true" type="text">
                         <button style="position: absolute;top: 0;right: 6px;
@@ -407,7 +407,7 @@
                         <input name="partTimePostCategoryIdAddShow" id="partTimePostCategoryIdAddShow"
                                readonly="readonly"
                                type="text"
-                               autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 80px;"
+                               autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                                 <#--lay-verify="required"-->>
                         <input name="partTimePostCategoryId" id="partTimePostCategoryIdAdd" hidden="true" type="text">
                         <button style="position: absolute;top: 0;right: 6px;
@@ -422,7 +422,7 @@
                     <div class="layui-input-inline">
                         <input name="partTimePostIdAddShow" id="partTimePostIdAddShow" readonly="readonly"
                                type="text"
-                               autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 80px;"
+                               autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                                 <#--lay-verify="required"-->>
                         <input name="partTimePostId" id="partTimePostIdAdd" hidden="true" type="text">
                         <button style="position: absolute;top: 0;right: 6px;
@@ -501,7 +501,7 @@
             <div class="layui-input-inline">
                 <input name="departmentId_zgsAddShow" id="departmentId_zgsAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="departmentId" id="departmentId_zgsAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -517,7 +517,7 @@
             <div class="layui-input-inline">
                 <input name="staffIndustryZgsIDAddShow" id="staffIndustryZgsIDAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                         <#-- lay-verify="required"-->>
                 <input name="staffIndustryID" id="staffIndustryZgsIDAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -533,7 +533,7 @@
             <div class="layui-input-inline">
                 <input name="postCategoryIdAdd_zgsShow" id="postCategoryIdAdd_zgsShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="postCategoryId" id="postCategoryIdAdd_zgs" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -549,7 +549,7 @@
             <div class="layui-input-inline">
                 <input name="postIdAdd_zgsShow" id="postIdAdd_zgsShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="postId" id="postIdAdd_zgs" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -659,7 +659,7 @@
             <div class="layui-input-inline">
                 <input name="groupIdEditShow" id="groupIdEditShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入分组" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入分组" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                         <#-- lay-verify="required"-->>
                 <input name="groupId" id="groupIdEdit" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -675,7 +675,7 @@
             <div class="layui-input-inline">
                 <input name="departmentId_other_fgsShow" id="departmentId_other_fgsShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="departmentId" id="departmentId_other_fgs" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -691,7 +691,7 @@
             <div class="layui-input-inline">
                 <input name="postCategoryId_fgsShow" id="postCategoryId_fgsShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="postCategoryId" id="postCategoryId_fgs" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -707,7 +707,7 @@
             <div class="layui-input-inline">
                 <input name="postId_fgsShow" id="postId_fgsShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="postId" id="postId_fgs" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -803,7 +803,7 @@
                         <input name="departmentIdFgsEditShowPartTime" id="departmentIdFgsEditShowPartTime"
                                readonly="readonly"
                                type="text"
-                               autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 80px;"
+                               autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                                 <#--lay-verify="required"-->>
                         <input name="departmentId" id="departmentIdFgsEditPartTime" hidden="true" type="text">
                         <button style="position: absolute;top: 0;right: 6px;
@@ -819,7 +819,7 @@
                         <input name="staffIndustryPartTimeIDEditShow" id="staffIndustryPartTimeIDEditShow"
                                readonly="readonly"
                                type="text"
-                               autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                               autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                                 <#-- lay-verify="required"-->>
                         <input name="staffIndustryPartTimeID" id="staffIndustryPartTimeIDEdit" hidden="true"
                                type="text">
@@ -835,7 +835,7 @@
                         <input name="partTimePostCategoryIdEditShow" id="partTimePostCategoryIdEditShow"
                                readonly="readonly"
                                type="text"
-                               autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 80px;"
+                               autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                                 <#--lay-verify="required"-->>
                         <input name="partTimePostCategoryId" id="partTimePostCategoryIdEdit" hidden="true" type="text">
                         <button style="position: absolute;top: 0;right: 6px;
@@ -850,7 +850,7 @@
                     <div class="layui-input-inline">
                         <input name="partTimePostIdEditShow" id="partTimePostIdEditShow" readonly="readonly"
                                type="text"
-                               autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 80px;"
+                               autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                                 <#--lay-verify="required"-->>
                         <input name="partTimePostId" id="partTimePostIdEdit" hidden="true" type="text">
                         <button style="position: absolute;top: 0;right: 6px;
@@ -934,7 +934,7 @@
             <div class="layui-input-inline">
                 <input name="departmentId_other_fgsShow" id="departmentId_otherShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入部门" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="departmentId" id="departmentId_other" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -950,7 +950,7 @@
             <div class="layui-input-inline">
                 <input name="postCategoryId_fgsShow" id="postCategoryIdEditShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="postCategoryId" id="postCategoryIdEdit" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -966,7 +966,7 @@
             <div class="layui-input-inline">
                 <input name="postId_fgsShow" id=postIdEditShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="postId" id="postIdEdit" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;

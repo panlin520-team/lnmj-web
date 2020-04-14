@@ -72,7 +72,7 @@
             <div class="layui-input-inline">
                 <input name="commodityTypeIndustryAddShow" id="commodityTypeIndustryAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="commodityTypeIndustry" id="commodityTypeIndustryAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;

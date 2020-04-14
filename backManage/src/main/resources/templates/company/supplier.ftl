@@ -112,7 +112,7 @@
             <label class="layui-form-label xrequired">所属供应商分类</label>
             <div class="layui-input-inline">
                 <input name="supplierCategoryIdAddShow" id="supplierCategoryIdAddShow" readonly="readonly" type="text"
-                       autocomplete="off" placeholder="请输入供应商分类" class="layui-input" style="padding-right: 80px;" lay-verify="required">
+                       autocomplete="off" placeholder="请输入供应商分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;" lay-verify="required">
                 <input name="supplierCategoryId" id="supplierCategoryIdAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
     cursor: pointer;" type="button" class="layui-btn" id="serachSupplierCategoryIdAdd"><i
@@ -218,7 +218,7 @@
         <label class="layui-form-label xrequired">所属供应商分类</label>
         <div class="layui-input-inline">
             <input name="supplierCategoryIdEditShow" id="supplierCategoryIdEditShow" readonly="readonly" type="text"
-                   autocomplete="off" placeholder="请输入供应商分类" class="layui-input" style="padding-right: 80px;" lay-verify="required">
+                   autocomplete="off" placeholder="请输入供应商分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;" lay-verify="required">
             <input name="supplierCategoryId" id="supplierCategoryIdEdit" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
     cursor: pointer;" type="button" class="layui-btn" id="serachSupplierCategoryIdEdit"><i

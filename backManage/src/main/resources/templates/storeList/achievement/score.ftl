@@ -72,7 +72,7 @@
         <div class="layui-input-inline">
             <input name="achievementIndustryIDAddShow" id="achievementIndustryIDAddShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                     <#-- lay-verify="required"-->>
             <input name="achievementIndustryID" id="achievementIndustryIDAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
@@ -87,7 +87,7 @@
         <div class="layui-input-inline">
             <input name="achievementIDAddShow" id="achievementIDAddShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入业绩分类" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入业绩分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                     <#--lay-verify="required"-->>
             <input name="achievementID" id="achievementIDAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
@@ -103,7 +103,7 @@
         <div class="layui-input-inline">
             <input name="scoreAchievementIDAddShow" id="scoreAchievementIDAddShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入业绩" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入业绩" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                     <#--lay-verify="required"-->>
             <input name="scoreAchievementID" id="scoreAchievementIDAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
@@ -119,7 +119,7 @@
         <div class="layui-input-inline">
             <input name="postCategoryIdAddShow" id="postCategoryIdAddShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入职位" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                     <#-- lay-verify="required"-->>
             <input name="postCategoryId" id="postCategoryIdAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;

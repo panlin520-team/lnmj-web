@@ -136,7 +136,7 @@
         <div class="layui-input-inline">
             <input name="staffNumberShow" id="staffNumberShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入销售员" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入销售员" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                    lay-verify="required">
             <input name="staffNumber" id="staffNumber" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;

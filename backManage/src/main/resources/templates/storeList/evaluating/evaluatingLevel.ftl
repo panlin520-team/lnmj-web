@@ -56,7 +56,7 @@
         <div class="layui-input-inline">
             <input name="evaluatingLevelEvaluatingIDAddShow" id="evaluatingLevelEvaluatingIDAddShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入客户评测" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入客户评测" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                      lay-verify="required">
             <input name="evaluatingLevelEvaluatingID" id="evaluatingLevelEvaluatingIDAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;

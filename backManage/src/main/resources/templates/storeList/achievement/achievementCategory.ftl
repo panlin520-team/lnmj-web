@@ -66,7 +66,7 @@
             <div class="layui-input-inline">
                 <input name="achievementIndustryIDAddShow" id="achievementIndustryIDAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                         <#-- lay-verify="required"-->>
                 <input name="achievementIndustryID" id="achievementIndustryIDAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -134,7 +134,7 @@
             <div class="layui-input-inline">
                 <input name="achievementIndustryIDEditShow" id="achievementIndustryIDEditShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                         <#-- lay-verify="required"-->>
                 <input name="achievementIndustryID" id="achievementIndustryIDEdit" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;

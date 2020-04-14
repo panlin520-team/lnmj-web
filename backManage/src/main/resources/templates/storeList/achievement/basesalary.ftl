@@ -64,7 +64,7 @@
         <div class="layui-input-inline">
             <input name="baseSalaryIndustryIDAddShow" id="baseSalaryIndustryIDAddShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                     <#-- lay-verify="required"-->>
             <input name="baseSalaryIndustryID" id="baseSalaryIndustryIDAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
@@ -80,7 +80,7 @@
         <div class="layui-input-inline">
             <input name="baseSalaryStoreIdAddShow" id="baseSalaryStoreIdAddShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入所属门店" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入所属门店" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                     <#--lay-verify="required"-->>
             <input name="baseSalaryStoreId" id="baseSalaryStoreIdAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
@@ -96,7 +96,7 @@
         <div class="layui-input-inline">
             <input name="baseSalaryPostIDAddShow" id="baseSalaryPostIDAddShow" readonly="readonly"
                    type="text"
-                   autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 80px;"
+                   autocomplete="off" placeholder="请输入职位分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                     <#--lay-verify="required"-->>
             <input name="baseSalaryPostID" id="baseSalaryPostIDAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;

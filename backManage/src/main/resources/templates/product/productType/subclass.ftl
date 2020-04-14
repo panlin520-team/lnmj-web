@@ -79,7 +79,7 @@
             <div class="layui-input-inline">
                 <input name="industryIdAddShow" id="industryIdAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                       <#-- lay-verify="required"-->>
                 <input name="industryId" id="industryIdAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -94,7 +94,7 @@
             <div class="layui-input-inline">
                 <input name="commodityTypeAddShow" id="commodityTypeAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入大类" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入大类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="commodityType" id="commodityTypeAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -116,7 +116,7 @@
             <div class="layui-input-inline">
                 <input name="subclassEvaluatingAddShow" id="subclassEvaluatingAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入客户评测" class="layui-input" style="padding-right: 80px;"
+                       autocomplete="off" placeholder="请输入客户评测" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="subclassEvaluating" id="subclassEvaluatingAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
