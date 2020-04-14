@@ -1107,7 +1107,7 @@
                         , "achievementPostName": data.achievementPostName
 
 
-                        , "achievementIDEditShow": data.achievementName
+                        , "achievementIDEditShow": data.achievementCategoryName
                         , "achievementID": data.achievementID
                     }
                 } else if (data.achievementMethods === 2) {
@@ -1151,7 +1151,7 @@
                         , "achievementPostName": data.achievementPostName
 
 
-                        , "achievementIDEditShow": data.achievementName
+                        , "achievementIDEditShow": data.achievementCategoryName
                         , "achievementID": data.achievementID
                     }
                 }

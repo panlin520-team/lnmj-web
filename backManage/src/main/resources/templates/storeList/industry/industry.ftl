@@ -24,7 +24,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">行业名称</label>
                 <div class="layui-input-inline">
-                    <input class="layui-input" type="text" name="industryNameKeyword" autocomplete="off" placeholder="请输入公司名称">
+                    <input class="layui-input" type="text" name="industryNameKeyword" autocomplete="off"
+                           placeholder="请输入公司名称">
                 </div>
 
             </div>
@@ -49,23 +50,40 @@
 
 
 <#--添加表单-->
-<div class="layui-fluid layui-form-pane layui-personal" id="addDiv" hidden="" style="margin: 15px;">
-    <form class="layui-form" id="addForm" action="" lay-filter="example" method="post">
-        <div class="layui-form-item">
-            <label class="layui-form-label">行业名称</label>
-            <div class="layui-input-block">
-                <input type="text" name="industryName" lay-verify="required" autocomplete="off" placeholder="请输入行业名称"
-                       class="layui-input">
+    <div class="layui-fluid layui-form-pane layui-personal" id="addDiv" hidden="" style="margin: 15px;">
+        <form class="layui-form" id="addForm" action="" lay-filter="example" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">行业名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="industryName" lay-verify="required" autocomplete="off"
+                           placeholder="请输入行业名称"
+                           class="layui-input">
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="addsubmitfilter">立即提交</button>
-                <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="addsubmitfilter">立即提交</button>
+                    <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
+<#--<div id="jinduDiv" hidden="hidden" >-->
+    <div style="display:none;" id="show">
+    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demoJinDu" id="demoJinDu"
+         hidden="hidden">
+        <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+    </div>
 </div>
+
+<#--<div style="width: 100%;height: 100%;position: fixed;background: rgba(249, 245, 245, 0.5);display: block;" id="a">-->
+<#--<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demoJinDu" >-->
+<#--<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>-->
+<#--</div>-->
+<#--</div>-->
+
+
 <script>
     //列表显示
     var addOpen = null;
@@ -93,7 +111,7 @@
             , cols: [[
                 {type: 'checkbox', fixed: 'left', width: 40}
                 , {field: 'industryID', title: 'id', sort: true, fixed: 'left'}
-                , {field: 'industryName', edit: 'text',title: '行业名称'}
+                , {field: 'industryName', edit: 'text', title: '行业名称'}
                 , {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
 
             ]]
@@ -101,11 +119,12 @@
     });
 
 
-    layui.use(['table', 'layer', 'jquery', 'form'], function () {
+    layui.use(['table', 'layer', 'jquery', 'form', 'element'], function () {
         var table = layui.table,
-                $ = layui.jquery,
-                form = layui.form;
-
+            $ = layui.jquery,
+            form = layui.form,
+            element = layui.element;
+        element.progress('demo', '0%')
         //监听工具条
         table.on('tool(demo)', function (obj) {
             var data = obj.data;
@@ -165,29 +184,77 @@
                 industryName: $("input[name='industryName']").val(),
                 createOperator: "${currentUser.trueName!}"
             };
-            $.post(url, params, function (res) {
-                if (res.responseStatusType.message == "Success") {
-                    layer.open({
-                        title: '添加'
-                        , content: '添加成功！'
-                        , btn: ["关闭"]
-                        , btn2: function (index) {
-                            layer.close(index);
+            $("#demoJinDu").show();
 
-                        }, end: function () {
-                            table.reload("industryReload");
-                            layer.close(addOpen);
+            // layer.open({
+            //     type: 3,
+            //     area: ['100%', '100%'],
+            //     content: $('#jinduDiv')
+            // });
+
+            layer.open({
+                type: 1,
+                content: $("#show"),
+                success: function (layero, index) {
+                    fun = setInterval(function () {
+                        element.progress('demo', t + '%');
+                        if (t >= 100) {
+                            clearInterval(fun);
+                            layer.close(show);
+                        } else {
+                            t++;
                         }
-                    });
-                    //重新加载表格
-                    layui.form.render();
-                } else {
-                    layer.msg(res.responseStatusType.error.errorMsg, {
-                        time: 20000, //20s后自动关闭
-                        btn: ['明白了']
-                    });
+                    }, 100)
+                },
+                end: function () {
+                    element.progress('demo', '0%');
+                    clearInterval(fun);
                 }
             })
+
+
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: params,
+                async: true,
+                beforeSend: function () {
+
+                },
+                error: function (request) {
+                    layer.alert("与服务器连接失败/(ㄒoㄒ)/~~");
+                },
+
+                success: function (data) {
+                    if (data.responseStatusType.message == "Success") {
+                        // setTimeout(function(){
+                        //     $("#demoJinDu").hide();
+                        // }, 1000);
+                        layer.open({
+                            title: '添加'
+                            , content: '添加成功！'
+                            , btn: ["关闭"]
+                            , btn2: function (index) {
+                                layer.close(index);
+
+                            }, end: function () {
+                                table.reload("industryReload");
+                                layer.close(addOpen);
+                            }
+                        });
+                        //重新加载表格
+                        layui.form.render();
+                    } else {
+                        layer.msg(data.responseStatusType.error.errorMsg, {
+                            time: 20000, //20s后自动关闭
+                            btn: ['明白了']
+                        });
+                    }
+                    element.progress('demoJinDu', '100%')
+                    $("#jinduDiv").hide();
+                }
+            });
             return false;
         });
     });
@@ -205,7 +272,8 @@
                 layer.open({
                     title: '删除'
                     , content: '删除成功！'
-                });c
+                });
+                c
                 //重新加载表格
                 table.reload("industryReload");
             } else {
@@ -236,8 +304,8 @@
         var table = layui.table;
         table.on('edit(demo)', function (obj) {
             var value = obj.value //得到修改后的值
-                    , data = obj.data //得到所在行所有键值
-                    , field = obj.field; //得到字段
+                , data = obj.data //得到所在行所有键值
+                , field = obj.field; //得到字段
             var paramsValue = null;
             if (field == "industryName") {
                 paramsValue = {
@@ -271,8 +339,6 @@
         });
     });
 </script>
-
-
 
 
 </body>

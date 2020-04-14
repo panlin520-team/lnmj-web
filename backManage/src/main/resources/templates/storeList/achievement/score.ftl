@@ -179,6 +179,11 @@
             </div>
         </div>
     </div>
+
+    <span style="color: red">注：评分=（业绩总额-业绩基数）/分值基数+默认分数
+        判断得分是否低于最低分，如果低于最低分，按最低分算，如果高于最高分，按最高分算</span>
+
+
     <div class="layui-form-item" hidden="hidden">
         <div class="layui-input-block">
             <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>

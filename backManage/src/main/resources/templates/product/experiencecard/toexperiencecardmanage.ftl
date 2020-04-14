@@ -136,11 +136,12 @@
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">所属业绩</label>
-                    <div class="layui-input-block" style="width:150px;">
+                    <div class="layui-input-inline" style="width:150px;">
                         <select name="achievementPostId" id="achievementPostId" lay-filter="achievementPostId"
                                 <#--lay-verify="required"-->>
                         </select>
                     </div>
+                    <span style="color: red">注：如果不选择体验卡业绩，默认采用充值业绩统计</span>
                 </div>
 
                 <div class="layui-form-item">
@@ -251,11 +252,12 @@
 
             <div class="layui-form-item">
                 <label class="layui-form-label">所属业绩</label>
-                <div class="layui-input-block" style="width:150px;">
+                <div class="layui-input-inline" style="width:150px;">
                     <select name="achievementPostIdEdit" id="achievementPostIdEdit" lay-filter="achievementPostId"
                             <#--lay-verify="required"-->>
                     </select>
                 </div>
+                <span style="color: red">注：如果不选择体验卡业绩，默认采用充值业绩统计</span>
             </div>
 
 

@@ -99,7 +99,7 @@
             <input name="postLevelAddShow" id="postLevelAddShow" readonly="readonly" type="text"
                    autocomplete="off" placeholder="请输入职位星级" class="layui-input"
                    style="padding-right: 0px;width: 144px;height: 38px;padding-left: 0px;"
-                   lay-verify="required">
+                   <#--lay-verify="required"-->>
             <input name="postLevel" id="postLevelAdd" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
     cursor: pointer;" type="button" class="layui-btn" id="serachpostLevelAdd"><i

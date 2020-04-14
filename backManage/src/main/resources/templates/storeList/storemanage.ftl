@@ -131,15 +131,32 @@
             </div>
         </div>
 
-        <div class="layui-form-item" id="subCompanySelect">
+       <#-- <div class="layui-form-item" id="subCompanySelect">
             <label class="layui-form-label xrequired">门店所属子公司</label>
             <div class="layui-input-inline" style="width:270px;">
-                <select name="subCompanyId" id="subCompanyIdAdd" lay-filter="subCompanyId"
+                &lt;#&ndash;<select name="subCompanyId" id="subCompanyIdAdd" lay-filter="subCompanyId"
                         lay-verify="required">
-                </select>
+                </select>&ndash;&gt;
+                <span name="subCompanyId" id="subCompanyIdAdd"></span>
+            </div>
+        </div>-->
+
+
+        <div class="layui-form-item" hidden="hidden">
+            <label class="layui-form-label">门店所属子公司</label>
+            <div class="layui-input-block">
+                <input type="text" name="subCompanyId" id="subCompanyIdAdd" autocomplete="off" placeholder="请输入店铺名称"
+                       class="layui-input">
             </div>
         </div>
 
+        <div class="layui-form-item">
+            <label class="layui-form-label">门店所属子公司</label>
+            <div class="layui-input-block">
+                <input type="text" name="subCompanyIdParam" id="subCompanyIdAddParam" autocomplete="off" placeholder="请输入店铺名称"
+                       class="layui-input" disabled="disabled">
+            </div>
+        </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label xrequired">店铺名称</label>
@@ -690,6 +707,10 @@
             title: '新建店铺',
             content: $('#addeditformdivid'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
             success: function () {
+
+                $("#subCompanyIdAddParam").val("${currentUser.companyName!}");
+                $("#subCompanyIdAdd").val("${currentUser.companyId!}");
+
                 var form = layui.form;
                 var data = {"provinceId": "110000", "cityId": "110100", "countyId": "110101"}//默认北京
                 //查询赋值
@@ -1086,7 +1107,7 @@
             if (result.responseStatusType.message == "Success") {
                 var list = result.result;    //返回的数据
                 var server = document.getElementById("subCompanyIdAdd"); //server为select定义的id
-                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
+                /*server.innerHTML = "<option value='' selected='selected'>请选择</option>";*/
                 for (var p in list) {
                     var optgroup = document.createElement("optgroup");  // 创建添加optgroup属性
                     optgroup.setAttribute("label", list[p].companyName); // 给optgroup的label添加值
@@ -1117,8 +1138,6 @@
         option.innerText = "${currentUser.companyName!}";     // 打印option对应的纯文本
         server.appendChild(option);           //给select添加option子标签
         form.render();
-
-
     }
 
     //删除仓库

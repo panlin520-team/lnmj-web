@@ -55,13 +55,7 @@
             }
             , cols: [[
                 {type: 'checkbox', fixed: 'left', width: 40}
-                , {field: 'evaluatingDetailedEvaluatingID', title: ' 客户评测名称',  fixed: 'left',templet:function (d) {
-                        for (var p in evaluatingData) {
-                            if (d.evaluatingDetailedEvaluatingID == evaluatingData[p].evaluatingID) {
-                                return evaluatingData[p].evaluatingName;
-                            }
-                        }
-                    }}
+                , {field: 'evaluatingDetailedEvaluatingName', title: '客户评测名称', fixed: 'left'}
                 , {field: 'evaluatingDetailedAmount', title: '金额/个数', sort: true, fixed: 'left'}
                 , {field: 'evaluatingDetailedRechargeOrderID', title: '储值订单', sort: true, fixed: 'left'}
                 , {field: 'evaluatingDetailedOrderID', title: '支付订单', sort: true, fixed: 'left'}
