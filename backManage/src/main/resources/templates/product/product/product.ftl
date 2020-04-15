@@ -3025,7 +3025,7 @@
                     }
                 });
             } else if (obj.event === 'putDown') {
-                var productType = $('#productType option:selected').val();//jq 获取下拉框的值
+                var productType = $('#productTypeSelect option:selected').val();//jq 获取下拉框的值
                 var url = productHost + "/manage/product/onOffSale";
                 var params = {
                     productStatus: 2,

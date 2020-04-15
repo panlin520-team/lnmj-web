@@ -427,7 +427,7 @@
                 }
                 , {field: 'achievementMethodsName', title: '提成方式'}
                 /* , {field: 'achievementInterval', title: '储值业绩有效期（天）'}*/
-                , {field: 'achievementStoreName', title: '是否为个人业绩'}
+                , {field: 'achievementStoreName', title: '业绩统计方式'}
                 , {
                     field: 'isBasicSalary', title: '是否计算底薪', templet: function (d) {
                         var isbasi = ""

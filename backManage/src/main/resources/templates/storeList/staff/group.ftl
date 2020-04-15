@@ -117,7 +117,7 @@
     /*----------------渲染表格数据-------------------*/
     //列表显示
     var list = loadFindBeautician();
-    var firstValue = loadShop();
+    loadShop();
     loadShopAdd();
     var addForm = null;
     var editForm = null;
@@ -138,7 +138,7 @@
                 limitName: 'pageSize' //每页数据量的参数名，默认：limit
             }
             , where: {
-                storeId: firstValue
+                storeId: 0
             }
             , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
                 return {
@@ -152,6 +152,7 @@
                 {type: 'checkbox', fixed: 'left', width: 100}
                 , {field: 'groupId', title: '分组id', sort: true}
                 , {field: 'name', edit: 'text', title: '分组名称'}
+                , {field: 'storeName', title: '所属门店'}
                 , {
                     field: 'groupLeaderId', title: '组长名称', templet: function (d) {
                         if (d.groupLeaderId == 0) {
@@ -469,11 +470,9 @@
             if (result.responseStatusType.message == "Success") {
                 var list = result.result;    //返回的数据
                 var server = document.getElementById("stores"); //server为select定义的id
+                server.innerHTML = "<option value='0' selected='selected'>请选择</option>";
                 for (var p in list) {
                     var option = document.createElement("option");  // 创建添加option属性
-                    if (p == 0) {
-                        firstValue = list[p].storeId;
-                    }
                     option.setAttribute("value", list[p].storeId); // 给option的value添加值
                     option.innerText = list[p].name;     // 打印option对应的纯文本
                     server.appendChild(option);           //给select添加option子标签
@@ -494,11 +493,9 @@
             if (result.responseStatusType.message == "Success") {
                 var list = result.result;    //返回的数据
                 var server = document.getElementById("storesAdd"); //server为select定义的id
+                server.innerHTML = "<option value='0' selected='selected'>请选择</option>";
                 for (var p in list) {
                     var option = document.createElement("option");  // 创建添加option属性
-                    if (p == 0) {
-                        firstValue = list[p].storeId;
-                    }
                     option.setAttribute("value", list[p].storeId); // 给option的value添加值
                     option.innerText = list[p].name;     // 打印option对应的纯文本
                     server.appendChild(option);           //给select添加option子标签
