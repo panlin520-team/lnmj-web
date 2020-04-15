@@ -56,13 +56,43 @@
                        class="layui-input">
             </div>
         </div>
+
+
+
+
+
         <div class="layui-form-item">
             <label class="layui-form-label xrequired">请选择门店</label>
             <div class="layui-input-inline">
-                <select name="storeId" id="storesAdd" lay-filter="storesAdd">
-                </select>
+                <input name="storeAddShow" id="storeAddShow" readonly="readonly"
+                       type="text"
+                       autocomplete="off" placeholder="请输入店铺" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
+                       lay-verify="required">
+                <input name="storeId" id="storeAdd" hidden="true" type="text">
+                <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachStoreAdd"><i
+                            class="layui-icon layui-icon-search"></i></button>
+
             </div>
         </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">组长</label>
+            <div class="layui-input-inline">
+                <input name="groupLeaderIdAddShow" id="groupLeaderIdAddShow" readonly="readonly"
+                       type="text"
+                       autocomplete="off" placeholder="请输入店铺" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
+                       <#--lay-verify="required"-->>
+                <input name="groupLeaderId" id="groupLeaderIdAdd" hidden="true" type="text">
+                <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachGroupLeaderIdAdd"><i
+                            class="layui-icon layui-icon-search"></i></button>
+
+            </div>
+        </div>
+
+
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit="" lay-filter="addsubmitfilter">立即提交</button>
@@ -91,13 +121,38 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">组长</label>
-            <div class="layui-input-block" style="width:150px;">
-                <select name="groupLeaderId" id="groupLeaderIdEdit" lay-filter="groupLeaderId" lay-verify="required">
+            <label class="layui-form-label xrequired">请选择门店</label>
+            <div class="layui-input-inline">
+                <input name="storeEditShow" id="storeEditShow" readonly="readonly"
+                       type="text"
+                       autocomplete="off" placeholder="请输入店铺" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
+                       lay-verify="required">
+                <input name="storeId" id="storeEdit" hidden="true" type="text">
+                <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachStoreEdit"><i
+                            class="layui-icon layui-icon-search"></i></button>
 
-                </select>
             </div>
         </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">组长</label>
+            <div class="layui-input-inline">
+                <input name="groupLeaderIdEditShow" id="groupLeaderIdEditShow" readonly="readonly"
+                       type="text"
+                       autocomplete="off" placeholder="请输入店铺" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
+                        <#--lay-verify="required"-->>
+                <input name="groupLeaderId" id="groupLeaderIdEdit" hidden="true" type="text">
+                <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachGroupLeaderIdEdit"><i
+                            class="layui-icon layui-icon-search"></i></button>
+
+            </div>
+        </div>
+
+
+
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit="" lay-filter="editsubmitfilter">立即提交</button>
@@ -106,7 +161,7 @@
         </div>
     </form>
 </div>
-
+<#include "../../baseFtl/loadLinkData.ftl" />
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -115,8 +170,7 @@
 
 <script>
     /*----------------渲染表格数据-------------------*/
-    //列表显示
-    var list = loadFindBeautician();
+
 
     var addForm = null;
     var editForm = null;
@@ -152,21 +206,7 @@
                 , {field: 'groupId', title: '分组id', sort: true}
                 , {field: 'name', edit: 'text', title: '分组名称'}
                 , {field: 'storeName', title: '所属门店'}
-                , {
-                    field: 'groupLeaderId', title: '组长名称', templet: function (d) {
-                        if (d.groupLeaderId == 0) {
-                            return "<span id='groupLeaderName'>" + "未指定" + "</span>"
-                        } else{
-                            for (var p in list) {
-                                if (d.groupLeaderId == list[p].beauticianId) {
-                                    groupLeaderName = list[p].name;
-                                    return "<span id='groupLeaderName'>" + groupLeaderName + "</span>"
-                                }
-                            }
-
-                        }
-                    }, unresize: true
-                }
+                , {field: 'groupLeaderName', title: '组长名称'}
                 , {fixed: 'right', title: '操作', width: 170, align: 'center', toolbar: '#barDemo'}
             ]],
             done: function (res, curr, count) {
@@ -184,7 +224,176 @@
                 $ = layui.jquery,
                 form = layui.form;
         loadShop(form);
-        loadShopAdd(form);
+
+
+        /*------所属门店关联数据查看-添加-----*/
+        $("#" + "serachStoreAdd").click(function () {
+            var url = storeHost + "/manage/store/selectStoreList";
+            var param = {companyId: "${currentUser.companyId!}", companyType: "${currentUser.companyType!}"};
+            loadLinkData(layer, layui, url, "storeId", "name", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "storeAddShow").val(data.name);
+                $("#" + "storeAdd").val(data.storeId);
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var searchJsonName = {
+                    keyWordName: wordSearch,
+                    companyId: "${currentUser.companyId!}",
+                    companyType: "${currentUser.companyType!}"
+                }
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
+        });
+
+
+        /*------组长关联数据查看-添加-----*/
+        $("#" + "serachGroupLeaderIdAdd").click(function () {
+            var url = storeHost + "/manage/beautician/selectBeauticianList";
+            var storeAdd = $("input[id='storeAdd']").val();
+            if (storeAdd == "" || storeAdd == null) {
+                layer.msg("请先选择所属门店");
+                return
+            }
+            var param = {companyId: storeAdd, companyType: 3};
+            loadLinkData(layer, layui, url, "beauticianId", "name", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "groupLeaderIdAddShow").val(data.name);
+                $("#" + "groupLeaderIdAdd").val(data.beauticianId);
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var searchJsonName = {
+                    keyWordName: wordSearch,
+                    companyId: storeAdd,
+                    companyType: 3
+                }
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
+        });
+
+
+        /*------所属门店关联数据查看-修改-----*/
+        $("#" + "serachStoreEdit").click(function () {
+            var url = storeHost + "/manage/store/selectStoreList";
+            var param = {companyId: "${currentUser.companyId!}", companyType: "${currentUser.companyType!}"};
+            loadLinkData(layer, layui, url, "storeId", "name", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "storeEditShow").val(data.name);
+                $("#" + "storeEdit").val(data.storeId);
+
+                $("#" + "groupLeaderIdEditShow").val("");
+                $("#" + "groupLeaderIdEdit").val("");
+
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var searchJsonName = {
+                    keyWordName: wordSearch,
+                    companyId: "${currentUser.companyId!}",
+                    companyType: "${currentUser.companyType!}"
+                }
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
+        });
+
+
+        /*------组长关联数据查看-修改-----*/
+        $("#" + "serachGroupLeaderIdEdit").click(function () {
+            var url = storeHost + "/manage/beautician/selectBeauticianList";
+            var storeEdit = $("input[id='storeEdit']").val();
+            if (storeEdit == "" || storeEdit == null) {
+                layer.msg("请先选择所属门店");
+                return
+            }
+            var param = {companyId: storeEdit, companyType: 3};
+            loadLinkData(layer, layui, url, "beauticianId", "name", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "groupLeaderIdEditShow").val(data.name);
+                $("#" + "groupLeaderIdEdit").val(data.beauticianId);
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var searchJsonName = {
+                    keyWordName: wordSearch,
+                    companyId: storeEdit,
+                    companyType: 3
+                }
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
+        });
+
+
+
+
         //监听表格复选框选择
         table.on('checkbox(demo)', function (obj) {
         });
@@ -263,7 +472,6 @@
                     layer.close(index);
                 });
             } else if (obj.event === 'edit') {
-                loadBeauticianForEdit(data, form);
                 groupShowAndEdit(data, table, $, form);
             }
         });
@@ -413,53 +621,9 @@
     });
 
 
-    /*获取所有的美容师*/
-    function loadFindBeautician() {
-        var url = storeHost + "/manage/beautician/selectBeauticianListNoPage";
-        var data = {};
-        var resultList = new Array();
-        $.ajax({
-            url: url,
-            type: "post",
-            data: data,
-            async: false,
-            success: function (result) {
-                if (result.responseStatusType.message == "Success") {
-                    resultList = result.result;    //返回的数据
-                } else {
-                }
-            }
-        });
-        return resultList
-    }
 
-    //加载美容师信息渲染下拉框
-    function loadBeauticianForEdit(datas, form) {
-        var url = storeHost + "/manage/beautician/selectBeauticianList";
-        var data = {"storeId": datas.storeId};
-        $.post(url, data, function (result) {
-            if (result.responseStatusType.message == "Success") {
-                var list = result.result.list;    //返回的数据
-                var server = document.getElementById("groupLeaderIdEdit"); //server为select定义的name
-                server.innerHTML = "";
-                for (var p in list) {
-                    var option = document.createElement("option");  // 创建添加option属性
-                    option.setAttribute("value", list[p].beauticianId); // 给option的value添加值
-                    option.innerText = list[p].name;     // 打印option对应的纯文本
-                    server.appendChild(option);           //给select添加option子标签
-                }
-                for (var i = 0; i < server.options.length; i++) {
-                    if (server.options[i].value == datas.groupLeaderId) {
-                        server.options[i].selected = true;
-                        break;
-                    }
-                }
-                form.render('select');
-            } else {
 
-            }
-        })
-    }
+
 
     //初始化店铺分组列表
     function loadShop(form) {
@@ -484,28 +648,7 @@
         })
     }
 
-    //初始化店铺分组列表
-    function loadShopAdd(form) {
-        var paramJson = {"subCompanyId": "${currentUser.companyId!}"}
-        var url = storeHost + "/manage/store/selectStoreListNoPage";
-        var data = paramJson;
-        $.post(url, data, function (result) {
-            if (result.responseStatusType.message == "Success") {
-                var list = result.result;    //返回的数据
-                var server = document.getElementById("storesAdd"); //server为select定义的id
-                server.innerHTML = "<option value='0' selected='selected'>请选择</option>";
-                for (var p in list) {
-                    var option = document.createElement("option");  // 创建添加option属性
-                    option.setAttribute("value", list[p].storeId); // 给option的value添加值
-                    option.innerText = list[p].name;     // 打印option对应的纯文本
-                    server.appendChild(option);           //给select添加option子标签
-                }
-                form.render();
-            } else {
 
-            }
-        })
-    }
 
     //修改分组按钮事件
     function groupShowAndEdit(data, table, $, form) {
@@ -515,11 +658,16 @@
             content: $('#editDiv'),
             area: ['900px'],
             closeBtn: 1,
-            success: function (layero) {
+            success: function (layero) {123
                 //表单初始赋值
                 form.val('exampleEdit', {
                     "name": data.name,
+                    "storeId": data.storeId,
+                    "storeEditShow": data.storeName,
+
                     "groupLeaderId": data.groupLeaderId,
+                    "groupLeaderIdEditShow": data.groupLeaderName,
+
                     "groupId": data.groupId
                 })
 

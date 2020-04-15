@@ -268,8 +268,8 @@
                         limitName: 'pageSize' //每页数据量的参数名，默认：limit
                     }
                     , where: {
-                        "companyId": "${currentUser.companyId!}",
-                        "companyType": "${currentUser.companyType!}",
+                        "companyId": companyId,
+                        "companyType": 3,
                         "searchCompanyType": "3",
                         keyWordName: keyWordName
                     }

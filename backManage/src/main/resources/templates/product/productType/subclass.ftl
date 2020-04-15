@@ -437,6 +437,7 @@
     });
 
     function editSubclass(data) {
+
         var a3 = layer.open({
             type: 1,
             title: '修改商品小类',
@@ -500,10 +501,45 @@
                 layero.addClass('layui-form');
                 layero.find('.layui-layer-btn0').attr('lay-filter', 'formVerify').attr('lay-submit', '');
 
-                layero.find("input[name='subclassID']").val(data.subclassID);
-                layero.find("input[name='subclassName']").val(data.subclassName);
-                layero.find("input[id='commodityTypeAddShow']").val(data.commodityTypeName);
-                layero.find("input[id='subclassEvaluatingAddShow']").val(data.subclassEvaluatingName);
+
+                //查询大类id 的类型
+                $.ajax({
+                    type: "POST",
+                    url: dataHost + "/commodityType/selectCommodityTypeById",
+                    data: {"commodityTypeID":data.commodityTypeID},
+                    async: true,
+                    error: function (request) {
+                        layer.alert("与服务器连接失败/(ㄒoㄒ)/~~");
+
+                    },
+                    success: function (data) {
+                        if (data.responseStatusType.message == 'Failure') {
+                            layer.alert(data.responseStatusType.error.errorMsg);
+                        }
+                        if (data.responseStatusType.message == 'Success') {
+                                if(data.result.commodityProductType == "1"){
+                                    $("#post").hide();
+                                }else{
+                                    $("#post").show();
+                                }
+                        }
+                    }
+                });
+
+
+
+
+                form.val("SubclassForm", {
+                    "subclassID": data.subclassID,
+                    "subclassName": data.subclassName,
+
+                    "commodityTypeAddShow": data.commodityTypeName,
+                    "commodityType": data.commodityTypeID,
+
+                    "subclassEvaluatingAddShow": data.subclassEvaluatingName,
+                    "subclassEvaluating": data.subclassEvaluatingID
+                });
+
                 //职位分类,根据商品大类中的行业id和职位分类中的行业id显示职位分类
                 loadPostCategory(data.commodityTypeID);
                 //职位选择
@@ -512,7 +548,7 @@
                 for (var p in postList) {
                     jsonObj[postList[p].postCategoryId] = true;
                 }
-                form.val('SubclassForm', jsonObj);
+                form.val('SubclassForm', jsonObj);123
                 //显示商品大类
                 layero.find("select[name='commodityType']").parent().parent().show();
 
@@ -560,21 +596,43 @@
                 layer.close(a1);
             },
             success: function (layero) {
-                var industryId;
-                for (var i = 0; i < dataCommityType.length; i++) {
-                    if (dataCommityType[i].commodityTypeID == data.commodityTypeID) {
-                        industryId = dataCommityType[i].commodityTypeIndustryID
-                    }
-                }
+
                 form.val("SubclassForm", {
-                    "industryId": industryId,
-                    "commodityType": data.commodityTypeID
-                })
-                layero.find("input[name='subclassName']").val(data.subclassName);
-                var commodityTypeID = layero.find("select[name='commodityType']");
-                commodityTypeID.find("option[value='" + data.commodityTypeID + "']").attr("selected", true);
-                var subclassEvaluating = layero.find("select[name='subclassEvaluating']");
-                subclassEvaluating.find("option[value='" + data.subclassEvaluatingID + "']").attr("selected", true);
+                    "subclassID": data.subclassID,
+                    "subclassName": data.subclassName,
+
+                    "commodityTypeAddShow": data.commodityTypeName,
+                    "commodityType": data.commodityTypeID,
+
+                    "subclassEvaluatingAddShow": data.subclassEvaluatingName,
+                    "subclassEvaluating": data.subclassEvaluatingID
+                });
+
+                //查询大类id 的类型
+                $.ajax({
+                    type: "POST",
+                    url: dataHost + "/commodityType/selectCommodityTypeById",
+                    data: {"commodityTypeID":data.commodityTypeID},
+                    async: true,
+                    error: function (request) {
+                        layer.alert("与服务器连接失败/(ㄒoㄒ)/~~");
+
+                    },
+                    success: function (data) {
+                        if (data.responseStatusType.message == 'Failure') {
+                            layer.alert(data.responseStatusType.error.errorMsg);
+                        }
+                        if (data.responseStatusType.message == 'Success') {
+                            if(data.result.commodityProductType == "1"){
+                                $("#post").hide();
+                            }else{
+                                $("#post").show();
+                            }
+                        }
+                    }
+                });
+
+
                 //职位分类,根据商品大类中的行业id和职位分类中的行业id显示职位分类
                 loadPostCategory(data.commodityTypeID);
                 //显示职位
@@ -591,16 +649,6 @@
                 } else {
                     layero.find("input[name='status']").val("删除");
                 }
-                layero.find("input[name='createOperator']").val(data.createOperator);
-                layero.find("input[name='createTime']").val(data.createTime);
-                layero.find("input[name='modifyOperator']").val(data.modifyOperator);
-                layero.find("input[name='dataChangeLastTime']").val(data.dataChangeLastTime);
-                //查看显示创建人和编辑人
-                layero.find("input[name='createOperator']").parent().parent().show();
-                layero.find("input[name='modifyOperator']").parent().parent().show();
-                layero.find("input[name='status']").parent().parent().show();
-                layero.find("input[name='createTime']").parent().parent().show();
-                layero.find("input[name='dataChangeLastTime']").parent().parent().show();
                 form.render();
             },
             area: ['600px', '500px'],
@@ -706,30 +754,15 @@
         for (var p in dataPostCategory) {
             if (dataPostCategory[p].industryID == inId) {
                 intresult++
-                // var div = "<div id='" + dataPostCategory[p].postCategoryId + "' class='layui-input-block'>" +
-                //     // "    <label class='layui-form-label'>提成方式</label>" +
-                //     "      <div class='layui-input-inline' style='width:160px;'>" +
-                //     "         <select name='method' lay-filter='method' lay-verify='required' disabled>" +
-                //     "           <option value='0'>请选择提成方式</option>" +
-                //     "           <option value='oneOrHalf'>个数</option>" +
-                //     "           <option value='salemanProportion'>比例</option>" +
-                //     "          </select>" +
-                //     "        </div>" +
-                //     "         <div class='layui-input-block'>" +
-                //     "           <input type='text' name='takePercentage' lay-verify='required' autocomplete='off' placeholder='输入个数或比例' class='layui-input' style='width:120px;' disabled>" +
-                //     "         </div>" +
-                //     "    </div>";
                 var input = "<div class='layui-input-inline' style='width:90px;'>" +
                         "<input type='checkbox' name='" + dataPostCategory[p].postCategoryId + "' value='" + dataPostCategory[p].postCategoryId + "" +
                         "' lay-filter='post' ay-skin='primary' title='" + dataPostCategory[p].name + "'></div>";
-                // $("#post").append(input + div);
                 $("#post").append(input);
             }
         }
         if (intresult == 0) {
             $("#post").html("<span style='color: red'>  选中的大类所属的行业暂未添加任何职位分类，请先添加</span>");
         }
-        // form.render('checkbox');
         form.render();
     }
 
@@ -803,8 +836,10 @@
                         }
                     }
                     if (productType == 1) { //产品
+                        $("#post").hide();
                         $("#post").parent().hide();
                     } else if (productType == 2) {   //服务
+                        $("#post").show();
                         $("#post").parent().show();
                         var intresult = 0
                         for (var p in dataPostCategory) {

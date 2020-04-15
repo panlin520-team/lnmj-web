@@ -479,7 +479,7 @@
             , title: '添加规则'
             , btn: ['提交', '取消']
             , success: function (layero) {
-                showAllSelect(laydate, form,accountId);
+                showAllSelect(laydate, form, data.accountTypeId);
                 //隐藏创建人和编辑人
                 layero.find("input[name='createOperator']").parent().parent().hide();
                 layero.find("input[name='modifyOperator']").parent().parent().hide();
@@ -555,18 +555,18 @@
         })
     }
 
-    function showAllSelect(laydate, form,aId) {
+    function showAllSelect(laydate, form, aId) {
         //加载所有的选择框
         $("#ruleForm select[name='accountType']").html("<option value=''>请选择</option>");
         for (var p in dataAccountType) {
             var option = "";
-            if(aId==dataAccountType[p].accountTypeId){
+            if (aId == dataAccountType[p].accountTypeId) {
                 option = "<option value='" + dataAccountType[p].accountTypeId + "' selected>" + dataAccountType[p].accountType + "</option>";
-            }else{
+            } else {
                 option = "<option value='" + dataAccountType[p].accountTypeId + "'>" + dataAccountType[p].accountType + "</option>"
             }
             $("#ruleForm select[name='accountType']").append(option);
-            $("#ruleForm select[name='accountType']").append(option);
+
         }
 
         $("#ruleForm select[name='productType']").html("<option value=''>请选择</option>");

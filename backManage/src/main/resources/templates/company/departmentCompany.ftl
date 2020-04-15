@@ -63,8 +63,16 @@
 
 <#--添加-->
     <div class="layui-fluid" id="addeditformdivid" hidden="" style="margin: 15px;">
-        <form class="layui-form layui-form-pane layui-personal" action="" id="addeditformid">
+        <form class="layui-form layui-form-pane layui-personal" action="" id="addeditformid" lay-filter="addeditformid">
             <div class="layui-form-item">
+                <div class="layui-form-item" hidden="hidden">
+                    <label class="layui-form-label">部门id</label>
+                    <div class="layui-input-block" style="width:220px;">
+                        <input type="text" name="id" <#--lay-verify="required"--> autocomplete="off" placeholder=""
+                               class="layui-input">
+                    </div>
+                </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label xrequired">部门名称</label>
                     <div class="layui-input-block" style="width:220px;">
@@ -73,7 +81,7 @@
                                class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item" id="submist">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit="" lay-filter="addeditsubmitfilter">立即提交</button>
                         <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -83,37 +91,8 @@
         </form>
     </div>
 
-<#--修改-->
-    <form class="layui-form layui-form-pane layui-personal" id="editForm" action="" lay-filter="exampleEdit"
-          method="post"
-          hidden="true">
 
-        <div class="layui-form-item" hidden="hidden">
-            <label class="layui-form-label">部门id</label>
-            <div class="layui-input-block" style="width:220px;">
-                <input type="text" name="id" lay-verify="required" autocomplete="off" placeholder=""
-                       class="layui-input">
-            </div>
-        </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label xrequired">部门名称</label>
-            <div class="layui-input-block" style="width:220px;">
-                <input type="text" name="name" lay-verify="required" autocomplete="off"
-                       placeholder="请输入部门名称"
-                       class="layui-input">
-            </div>
-        </div>
-    </form>
-
-<#--查看-->
-<form class="layui-form layui-form-pane layui-personal" id="showForm" action="" lay-filter="exampleShowForm"
-      method="post" hidden="true">
-    <div class="layui-form-item">
-        <label class="layui-form-label">部门名称</label>
-        <span name="name"></span>
-    </div>
-</form>
 
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
@@ -283,7 +262,7 @@
             title: '新建部门',
             content: $('#addeditformdivid'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
             success: function () {
-
+                $("#submist").show();
             }
 
         });
@@ -331,7 +310,7 @@
         var a1 = layer.open({
             type: 1,
             title: '部门修改',
-            content: $('#editForm'),
+            content: $('#addeditformdivid'),
             area: ['900px'],
             closeBtn: 1,
             btn: ['提交', '取消'],
@@ -372,11 +351,12 @@
                 layer.closeAll();
             },
             success: function (layero) {
+                $("#submist").hide();
                 layero.addClass('layui-form');
                 layero.find('.layui-layer-btn0').attr('lay-filter', 'formVerify').attr('lay-submit', '');
                 form.render();
                 //表单初始赋值
-                form.val('exampleEdit', {
+                form.val('addeditformid', {
                     "id": data.id,
                     "name": data.name
                 });
@@ -394,7 +374,7 @@
         var a2 = layer.open({
             type: 1,
             title: '部门详情',
-            content: $('#showForm'),
+            content: $('#addeditformdivid'),
             area: ['900px'],
             closeBtn: 1,
             btn: ['关闭'],
@@ -402,8 +382,13 @@
                 layer.close(a2)
             },
             success: function (layero) {
+                $("#submist").hide();
                 //初始赋值
-                layero.find("span[name='name']").text(data.name);
+                //表单初始赋值
+                form.val('addeditformid', {
+                    "id": data.id,
+                    "name": data.name
+                });
                 form.render();
             }, end: function () {
                 window.location.reload();
