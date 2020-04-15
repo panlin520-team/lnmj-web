@@ -117,8 +117,7 @@
     /*----------------渲染表格数据-------------------*/
     //列表显示
     var list = loadFindBeautician();
-    loadShop();
-    loadShopAdd();
+
     var addForm = null;
     var editForm = null;
     layui.use('table', function () {
@@ -184,7 +183,8 @@
                 layer = layui.layer,
                 $ = layui.jquery,
                 form = layui.form;
-
+        loadShop(form);
+        loadShopAdd(form);
         //监听表格复选框选择
         table.on('checkbox(demo)', function (obj) {
         });
@@ -462,7 +462,7 @@
     }
 
     //初始化店铺分组列表
-    function loadShop() {
+    function loadShop(form) {
         var paramJson = {"subCompanyId": "${currentUser.companyId!}"}
         var url = storeHost + "/manage/store/selectStoreListNoPage";
         var data = paramJson;
@@ -477,7 +477,7 @@
                     option.innerText = list[p].name;     // 打印option对应的纯文本
                     server.appendChild(option);           //给select添加option子标签
                 }
-
+                form.render();
             } else {
 
             }
@@ -485,7 +485,7 @@
     }
 
     //初始化店铺分组列表
-    function loadShopAdd() {
+    function loadShopAdd(form) {
         var paramJson = {"subCompanyId": "${currentUser.companyId!}"}
         var url = storeHost + "/manage/store/selectStoreListNoPage";
         var data = paramJson;
@@ -500,7 +500,7 @@
                     option.innerText = list[p].name;     // 打印option对应的纯文本
                     server.appendChild(option);           //给select添加option子标签
                 }
-
+                form.render();
             } else {
 
             }
