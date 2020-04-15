@@ -34,9 +34,9 @@
                 </div>
             </div>
 
-            <div class="layui-inline">
+           <#-- <div class="layui-inline">
                 <button class="layui-btn" data-type="search"><i class="layui-icon layui-icon-search"></i></button>
-            </div>
+            </div>-->
             <div class="layui-inline">
                 <div class="layui-btn-group demoTable">
                     <button class="layui-btn" id="add" data-type="add">增加</button>
