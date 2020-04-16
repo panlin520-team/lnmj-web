@@ -336,8 +336,12 @@
                     "data": res.result == null ? 0 : res.result.list //解析数据列表
                 };
             }
+            , request: {
+                pageName: 'pageNum', //页码的参数名称，默认：page
+                limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            }
             , where: {
-                storeId: "${currentUser.storeId!}"
+                storeId: "${currentUser.storeId!}",
             }
             , cols: [[
                 {type: 'checkbox', fixed: 'left', width: 40}
