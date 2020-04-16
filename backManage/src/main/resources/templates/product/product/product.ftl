@@ -1183,6 +1183,9 @@
                             "achievementPostIdAddShow": data.productPerformancePostName,
                             "achievementPostId": data.achievementPostId,
 
+                            "achievementIdAddShow": data.achievementName,
+                            "achievementId": data.achievementId,
+
                             "productKindAddShow": data.productKindName,
                             "productKind": data.productKind,
 
@@ -1422,6 +1425,10 @@
 
                             "achievementPostIdAddShow": data.productPerformancePostName,
                             "achievementPostId": data.achievementPostId,
+
+                            "achievementIdAddShow": data.achievementName,
+                            "achievementId": data.achievementId,
+
 
                             "productKindAddShow": data.productKindName,
                             "productKind": data.productKind,
