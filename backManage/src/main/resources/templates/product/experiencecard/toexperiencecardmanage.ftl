@@ -124,25 +124,54 @@
                     </div>
                 </div>
 
+
                 <div class="layui-form-item">
-                    <label class="layui-form-label">行业</label>
-                    <div class="layui-input-block" style="width:150px;">
-                        <select name="achievementIndustryID" id="achievementIndustryID"
-                                lay-filter="achievementIndustryID"
-                                <#--lay-verify="required-->">
-                        </select>
+                    <label class="layui-form-label xrequired">所属行业</label>
+                    <div class="layui-input-inline">
+                        <input name="achievementIndustryIDAddShow" id="achievementIndustryIDAddShow" readonly="readonly"
+                               type="text"
+                               autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
+                                 lay-verify="required">
+                        <input name="achievementIndustryID" id="achievementIndustryIDAdd" hidden="true" type="text">
+                        <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachAchievementIndustryIDAddAdd"><i
+                                    class="layui-icon layui-icon-search"></i></button>
+
                     </div>
                 </div>
 
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label xrequired">所属业绩分类</label>
+                    <div class="layui-input-inline">
+                        <input name="achievementIdAddShow" id="achievementIdAddShow" readonly="readonly" type="text"
+                               autocomplete="off"
+                               placeholder="请输入业绩分类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;" lay-verify="required">
+                        <input name="achievementId" id="achievementIdAdd" hidden="true" type="text">
+                        <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachAchievementId"><i
+                                    class="layui-icon layui-icon-search"></i></button>
+
+                    </div>
+                </div>
+
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">所属业绩</label>
-                    <div class="layui-input-inline" style="width:150px;">
-                        <select name="achievementPostId" id="achievementPostId" lay-filter="achievementPostId"
-                                <#--lay-verify="required"-->>
-                        </select>
+                    <div class="layui-input-inline">
+                        <input name="achievementPostIdAddShow" id="achievementPostIdAddShow" readonly="readonly" type="text" name="title"
+                               <#--lay-verify="title"--> autocomplete="off"
+                               placeholder="请输入业绩" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;">
+                        <input name="achievementPostId" id="achievementPostIdAdd" hidden="true" type="text">
+                        <button style="position: absolute;top: 0;right: 6px;
+    cursor: pointer;" type="button" class="layui-btn" id="serachAchievementPostId"><i
+                                    class="layui-icon layui-icon-search"></i></button>
                     </div>
-                    <span style="color: red">注：如果不选择体验卡业绩，默认采用充值业绩统计</span>
+                    <span style="color: red">注：如果不选择体验卡业绩，获取业绩分类匹配职位统计</span>
                 </div>
+
+
+
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">销量</label>
@@ -312,6 +341,9 @@
         </div>
     </form>
 </div>
+
+
+
 <#--点击体验卡项目单行后的表单-->
     <form class="layui-form layui-form-pane layui-personal" id="editFormProduct" action="" lay-filter="exampleProduct"
           method="post" hidden="true">
@@ -420,7 +452,7 @@
     </div>
 
 </form>
-
+<#include "../../baseFtl/loadLinkData.ftl" />
 
 <script type="text/html" id="barDemoForExperiencecard">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -521,19 +553,118 @@
         layedit.build('contentEdit', ptool);
         loadSubordBuyLimit(form);
         loadSubordBuyLimitEdit(form)
-        loadAchievementIndustry(form);
-        loadAchievementIndustryEdit(form);
-        loadAchievementEdit(form, null);
-        loadAchievement(form, null);
-        form.on('select(achievementIndustryID)', function (data) {
-            $("#achievementPostId").empty();
-            loadAchievement(form, data.value);
+        /*------行业关联数据查看-添加-----*/
+        $("#" + "serachAchievementIndustryIDAddAdd").click(function () {
+            var url = storeHost + "/manage/industry/selectList";
+            var param = {};
+            loadLinkData(layer, layui, url, "industryID", "industryName", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "achievementIndustryIDAddShow").val(data.industryName);
+                $("#" + "achievementIndustryIDAdd").val(data.industryID);
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var searchJsonName = {industryNameKeyword: wordSearch}
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
         });
 
-        form.on('select(achievementIndustryIDEdit)', function (data) {
-            $("#achievementPostIdEdit").empty();
-            loadAchievementEdit(form, data.value);
+
+        /*------业绩分类关联数据查看-添加------*/
+        $("#" + "serachAchievementId").click(function () {
+            var url = dataHost + "/performance/selectPerformanceList";
+            var achievementIndustryIDAdd = $("input[id='achievementIndustryIDAdd']").val();
+            if(achievementIndustryIDAdd==""||achievementIndustryIDAdd==null){
+                layer.msg("请先选择所属行业")
+                return
+            }
+            var param = {achievementIndustryID: achievementIndustryIDAdd,achievementType:6};
+            loadLinkData(layer, layui, url, "achievementID", "achievementName", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "achievementIdAddShow").val(data.achievementName);
+                $("#" + "achievementIdAdd").val(data.achievementID);
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var searchJsonName = {keyWordAchievementName: wordSearch,achievementIndustryID:achievementIndustryIDAdd,achievementType:6};
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
         });
+
+
+        /*------业绩关联数据查看-添加------*/
+        $("#" + "serachAchievementPostId").click(function () {
+            var url = dataHost + "/performance/selectPerformancePostList";
+            var achievementIdAdd = $("input[id='achievementIdAdd']").val();
+            if(achievementIdAdd==""||achievementIdAdd==null){
+                layer.msg("请先选择所属业绩分类")
+                return
+            }
+            var param = {achievementID: achievementIdAdd};
+            loadLinkData(layer, layui, url, "id", "achievementPostName", param);
+            table.on('row(showLinDataTable)', function (obj) {
+                var data = obj.data;
+                $("#" + "achievementPostIdAddShow").val(data.achievementPostName);
+                $("#" + "achievementPostIdAdd").val(data.id);
+                layer.close(Open);
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //搜索
+            $("#searchwordLinkData").click(function () {
+                var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
+                var achievementIdAdd = $("input[id='achievementIdAdd']").val();
+                var searchJsonName = {keyWord: wordSearch,achievementID:achievementIdAdd};
+                layui.use('table', function () {
+                    var table = layui.table;
+                    table.reload('showLinDataTableRelod', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: searchJsonName
+                    }, 'data');
+                });
+            })
+            //刷新
+            $("#refreshLinkData").click(function () {
+                $(".layui-laypage-btn").click();
+            })
+        });
+
 
         $("#submitSearchButton").click(function () {
             var keyWordProductName = $("input[name='keyWordProductName']").val();
@@ -914,7 +1045,11 @@
                 cardName: $("input[name='cardName']").val(),
                 account: $("input[name='account']").val(),
                 subordBuyLimitId: $("#subordBuyLimitId option:selected").val(),
-                achievementPostId: $("#achievementPostId option:selected").val(),
+
+
+                achievementId: $("input[name='achievementId']").val(),
+                achievementPostId: $("input[name='achievementPostId']").val(),
+
                 logoImage: resultImgUrlAdd,
                 productArray: JSON.stringify(productList),
                 moreContent: moreContent,
@@ -1526,73 +1661,8 @@
     });
 
 
-    //加载职位业绩-添加
-    function loadAchievement(form, achievementIndustryID) {
-        var arr = [];
-        var param = {storeId: JSON.stringify(arr), achievementType: 6, achievementIndustryID: achievementIndustryID};
-        $.ajax({
-            url: dataHost + "/performance/selectPerformanceList",
-            data: param,
-            method: "POST",
-            async: false,
-            success: function (res) {
-                var serverAchievementSearch = document.getElementById("achievementPostId");
-                if (res.responseStatusType.message == "Success") {
-                    var dataAchievement = res.result.list;
-                    serverAchievementSearch.innerHTML = "<option value='' selected='selected'>请选择</option>";
-                    for (var p in dataAchievement) {
-                        var optgroup = document.createElement("optgroup");  // 创建添加optgroup属性
-                        optgroup.setAttribute("label", dataAchievement[p].achievementName); // 给optgroup的label添加值
-                        optgroup.setAttribute("value", dataAchievement[p].achievementID); // 给option的value添加值
-                        var performancePostList = dataAchievement[p].performancePostList;
-                        for (var n in performancePostList) {
-                            var option = document.createElement("option");  // 创建添加option属性
-                            option.setAttribute("value", performancePostList[n].id); // 给option的value添加值
-                            option.innerText = performancePostList[n].achievementPostName;
-                            optgroup.appendChild(option)
 
-                        }
-                        serverAchievementSearch.appendChild(optgroup);           //给select添加option子标签
-                    }
-                }
-                form.render()
-            }
-        })
-    };
 
-    //加载职位业绩-修改
-    function loadAchievementEdit(form, achievementIndustryID) {
-        var arr = [];
-        var param = {storeId: JSON.stringify(arr), achievementType: 6, achievementIndustryID: achievementIndustryID};
-        $.ajax({
-            url: dataHost + "/performance/selectPerformanceList",
-            data: param,
-            method: "POST",
-            async: false,
-            success: function (res) {
-                var serverAchievementSearch = document.getElementById("achievementPostIdEdit");
-                if (res.responseStatusType.message == "Success") {
-                    var dataAchievement = res.result.list;
-                    serverAchievementSearch.innerHTML = "<option value='' selected='selected'>请选择</option>";
-                    for (var p in dataAchievement) {
-                        var optgroup = document.createElement("optgroup");  // 创建添加optgroup属性
-                        optgroup.setAttribute("label", dataAchievement[p].achievementName); // 给optgroup的label添加值
-                        optgroup.setAttribute("value", dataAchievement[p].achievementID); // 给option的value添加值
-                        var performancePostList = dataAchievement[p].performancePostList;
-                        for (var n in performancePostList) {
-                            var option = document.createElement("option");  // 创建添加option属性
-                            option.setAttribute("value", performancePostList[n].id); // 给option的value添加值
-                            option.innerText = performancePostList[n].achievementPostName;
-                            optgroup.appendChild(option)
-                            serverAchievementSearch.appendChild(option);
-                        }
-                        /*serverAchievementSearch.appendChild(option);*/           //给select添加option子标签
-                    }
-                }
-                form.render()
-            }
-        })
-    };
 
 
     function allotExp(data, table, form, $) {
@@ -1779,49 +1849,9 @@
         });
     });
 
-    //加载行业信息-添加
-    function loadAchievementIndustry(form) {
-        var url = storeHost + "/manage/industry/selectListIndustryNoPage";
-        var data = {};
-        $.post(url, data, function (result) {
-            if (result.responseStatusType.message == "Success") {
-                var list = result.result;    //返回的数据
-                var server = document.getElementById("achievementIndustryID"); //server为select定义的id
-                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
-                for (var p in list) {
-                    var option = document.createElement("option");  // 创建添加option属性
-                    option.setAttribute("value", list[p].industryID); // 给option的value添加值
-                    option.innerText = list[p].industryName;     // 打印option对应的纯文本
-                    server.appendChild(option);           //给select添加option子标签
-                }
-                form.render();
-            } else {
 
-            }
-        })
-    }
 
-    //加载行业信息-修改
-    function loadAchievementIndustryEdit(form) {
-        var url = storeHost + "/manage/industry/selectListIndustryNoPage";
-        var data = {};
-        $.post(url, data, function (result) {
-            if (result.responseStatusType.message == "Success") {
-                var list = result.result;    //返回的数据
-                var server = document.getElementById("achievementIndustryIDEdit"); //server为select定义的id
-                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
-                for (var p in list) {
-                    var option = document.createElement("option");  // 创建添加option属性
-                    option.setAttribute("value", list[p].industryID); // 给option的value添加值
-                    option.innerText = list[p].industryName;     // 打印option对应的纯文本
-                    server.appendChild(option);           //给select添加option子标签
-                }
-                form.render();
-            } else {
 
-            }
-        })
-    }
 
 
     //更新体验卡项目出库价

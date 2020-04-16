@@ -2199,7 +2199,7 @@
             } else if (obj.event === 'orderwork') {
                 orderwork(data, table, $);
             } else if (obj.event === 'checkSalaryDetailed') {
-                var dataStaff = data;
+
                 //页面弹框
                 var a2 = layer.open({
                     type: 1,
@@ -2212,6 +2212,8 @@
                         layer.close(a2);
                     },
                     success: function (layero) {
+                        $("#chooseSalaryDateForm").attr("data-staffNumber",data.staffNumber);
+                        $("#chooseSalaryDateForm").attr("data-staffName",data.name);
                         layui.use('laydate', function () {
                             var laydate = layui.laydate;
                             //日期时间范围
@@ -2220,13 +2222,14 @@
                                 , type: 'datetime'
                                 , range: true
                                 , done: function (value, date) {
+
                                     var url = dataHost + "/statistic/salesmanStatistic";
-                                    var data = {
-                                        salesmanID: dataStaff.staffNumber,
+                                    var data1 = {
+                                        salesmanID: $("#chooseSalaryDateForm").attr("data-staffNumber"),
                                         startDate: value.split(" - ")[0].replace(/^\s+|\s+$/g, ""),
                                         endDate: value.split(" - ")[1].replace(/^\s+|\s+$/g, "")
                                     };
-                                    $.post(url, data, function (result) {
+                                    $.post(url, data1, function (result) {
                                         if (result.responseStatusType.message == "Success") {
                                             var a3 = layer.open({
                                                 type: 1,
@@ -2241,7 +2244,7 @@
                                                 success: function (layero) {
                                                     form.val('exampleShow', {
                                                         "staffNumber": result.result.salesmanID  //员工编号
-                                                        , "staffName": dataStaff.name  //员工名称
+                                                        , "staffName": $("#chooseSalaryDateForm").attr("data-staffName")  //员工名称
                                                         , "statisticDateStart": result.result.statisticDateStart  // 统计开始时间
                                                         , "statisticDateEnd": result.result.statisticDateEnd  // 统计结束时间
                                                         , "numberPerformance": result.result.numberPerformanceAll   //个数业绩
