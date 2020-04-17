@@ -924,6 +924,8 @@
                                 }
                             }, 'data');
                         } else {
+                            //提交成功后关闭加载层
+                            layer.close(loadindex);
                             layer.msg(res.responseStatusType.error.errorMsg, {
                                 time: 20000, //20s后自动关闭
                                 btn: ['明白了']
@@ -1024,6 +1026,8 @@
                                 }
                             }, 'data');
                         } else {
+                            //提交成功后关闭加载层
+                            layer.close(loadindex);
                             layer.msg(res.responseStatusType.error.errorMsg, {
                                 time: 20000, //20s后自动关闭
                                 btn: ['明白了']

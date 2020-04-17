@@ -147,7 +147,9 @@
                         $("#filialeNameDiv").css("display", "none");
                     }
 
-                    $("#reset").click();//重置表单(新建时在进入表单前要重置一下表单的内容，不然表单打开后会显示上一次的表单的内容。这里调用表单中重置按钮的点击方法来重置)
+                    $("#resetZhong").click();
+                    $("#resetZhi").click();
+                    $("#resetFen").click();
                     layerid = layer.open({//开启表单弹层
                         // skin: 'layui-layer-molv',
                         area: '60%',
@@ -945,7 +947,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="addeditsubmitfilter">立即提交</button>
-                    <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button id="resetZhong" type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
 
@@ -1009,7 +1011,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="addeditsubmitfilter">立即提交</button>
-                    <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button id="resetZhi" type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
 
@@ -1066,7 +1068,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit="" lay-filter="addeditsubmitfilter">立即提交</button>
-                    <button id="reset" type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button id="resetFen" type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
 

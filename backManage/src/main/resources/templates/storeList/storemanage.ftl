@@ -13,6 +13,10 @@
     <script type="text/javascript" src="${basePath!}/assets/city-picker.data.js"></script>
     <script type="text/javascript" src="${basePath!}/assets/province.js"></script>
     <script src="${basePath!}/js/host.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.4&key=ad26780bfaabf0ca27ae6078e2e81682"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=39e67fa6d162e3cecd1ed71c2eb78e86&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
     <#include "../baseFtl/pageAuth.ftl" />
 
     <style>
@@ -24,6 +28,11 @@
             content: '* ';
             color: red;
         }
+        .amap-sug-result{
+            z-index: 99999999;!important;
+        }
+
+
     </style>
 </head>
 <body>
@@ -78,6 +87,7 @@
     <#--<a class="layui-btn layui-btn-xs" lay-event="enter">进入店铺</a>-->
         <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="updateStoreMap">修改门店位置</a>
     <#--<a class="layui-btn layui-btn-xs" lay-event="insertStock">生成仓库</a>
     <a class="layui-btn layui-btn-xs" lay-event="insertHeSuanFanWei">生成核算范围</a>
     <a class="layui-btn layui-btn-xs" lay-event="insertZhangBu">生成账簿</a>-->
@@ -100,7 +110,8 @@
             <label class="layui-form-label xrequired">门店所属分类</label>
             <div class="layui-input-block" style="width:150px;" id="storeCategory">
                 <input name="storeCategoryIdAddShow" id="storeCategoryIdAddShow" readonly="readonly" type="text"
-                       autocomplete="off" placeholder="请输入门店所属分类" class="layui-input" style="padding-right: 0px;width: 144px;height: 38px;padding-left: 10px;"
+                       autocomplete="off" placeholder="请输入门店所属分类" class="layui-input"
+                       style="padding-right: 0px;width: 144px;height: 38px;padding-left: 10px;"
                        lay-verify="required">
                 <input name="storeCategoryId" id="storeCategoryIdAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
@@ -113,7 +124,8 @@
             <label class="layui-form-label xrequired">门店所属行业</label>
             <div class="layui-input-block" style="width:150px;">
                 <input name="industryIDShowAdd" id="industryIDShowAdd" readonly="readonly" type="text"
-                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 0px;width: 144px;height: 38px;padding-left: 10px;"
+                       autocomplete="off" placeholder="请输入行业" class="layui-input"
+                       style="padding-right: 0px;width: 144px;height: 38px;padding-left: 10px;"
                        lay-verify="required">
                 <input name="industryID" id="industryIDAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;cursor: pointer;" type="button" class="layui-btn"
@@ -131,15 +143,15 @@
             </div>
         </div>
 
-       <#-- <div class="layui-form-item" id="subCompanySelect">
-            <label class="layui-form-label xrequired">门店所属子公司</label>
-            <div class="layui-input-inline" style="width:270px;">
-                &lt;#&ndash;<select name="subCompanyId" id="subCompanyIdAdd" lay-filter="subCompanyId"
-                        lay-verify="required">
-                </select>&ndash;&gt;
-                <span name="subCompanyId" id="subCompanyIdAdd"></span>
-            </div>
-        </div>-->
+        <#-- <div class="layui-form-item" id="subCompanySelect">
+             <label class="layui-form-label xrequired">门店所属子公司</label>
+             <div class="layui-input-inline" style="width:270px;">
+                 &lt;#&ndash;<select name="subCompanyId" id="subCompanyIdAdd" lay-filter="subCompanyId"
+                         lay-verify="required">
+                 </select>&ndash;&gt;
+                 <span name="subCompanyId" id="subCompanyIdAdd"></span>
+             </div>
+         </div>-->
 
 
         <div class="layui-form-item" hidden="hidden">
@@ -153,7 +165,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">门店所属子公司</label>
             <div class="layui-input-block">
-                <input type="text" name="subCompanyIdParam" id="subCompanyIdAddParam" autocomplete="off" placeholder="请输入店铺名称"
+                <input type="text" name="subCompanyIdParam" id="subCompanyIdAddParam" autocomplete="off"
+                       placeholder="请输入店铺名称"
                        class="layui-input" disabled="disabled">
             </div>
         </div>
@@ -247,7 +260,8 @@
         <label class="layui-form-label xrequired">门店所属分类</label>
         <div class="layui-input-block" style="width:150px;">
             <input name="storeCategoryIdShowEdit" id="storeCategoryIdShowEdit" readonly="readonly" type="text"
-                   autocomplete="off" placeholder="请输入门店所属分类" class="layui-input" style="padding-right: 0px;width: 144px;height: 38px;padding-left: 10px;" lay-verify="required">
+                   autocomplete="off" placeholder="请输入门店所属分类" class="layui-input"
+                   style="padding-right: 0px;width: 144px;height: 38px;padding-left: 10px;" lay-verify="required">
             <input name="storeCategoryId" id="storeCategoryIdEdit" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
     cursor: pointer;" type="button" class="layui-btn" id="serachstoreCategoryIdEdit"><i
@@ -259,7 +273,8 @@
         <label class="layui-form-label xrequired">门店所属行业</label>
         <div class="layui-input-block" style="width:150px;">
             <input name="industryIDShowEdit" id="industryIDShowEdit" readonly="readonly" type="text"
-                   autocomplete="off" placeholder="请输入门店所属行业" class="layui-input" style="padding-right: 0px;width: 144px;height: 38px;padding-left: 10px;" lay-verify="required">
+                   autocomplete="off" placeholder="请输入门店所属行业" class="layui-input"
+                   style="padding-right: 0px;width: 144px;height: 38px;padding-left: 10px;" lay-verify="required">
             <input name="industryID" id="industryIDEdit" hidden="true" type="text">
             <button style="position: absolute;top: 0;right: 6px;
     cursor: pointer;" type="button" class="layui-btn" id="serachindustryIDEdit"><i
@@ -331,6 +346,39 @@
     </div>
 </form>
 
+<form class="layui-form layui-form-pane layui-personal" id="map" action="" lay-filter="map" method="post"
+      hidden="true">
+    <div id="container"></div>
+
+
+    <div id="myPageTop">
+        <div class="input-card">
+            <h4>左击获取经纬度：</h4>
+            <div class="input-item">
+                <input type="text" readonly="true" id="lnglat">
+            </div>
+        </div>
+
+
+
+        <table>
+            <tr>
+                <td>
+                    <label>请输入关键字：</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="tipinput"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</form>
+
+
+
 
 <#include "../baseFtl/loadLinkData.ftl" />
 
@@ -372,6 +420,7 @@
                 , {field: 'shopDetailedAddress', title: '店铺详细地址'}
                 , {field: 'phoneNumber', title: '联系电话'}
                 , {field: 'code', title: '门店编号', width: 90}
+                , {field: 'industryName', title: '所属行业', width: 90}
                 , {field: 'subCompanyName', title: '所属子公司'}
                 , {fixed: 'right', title: '操作', width: 400, align: 'center', toolbar: '#barDemo'}
 
@@ -534,7 +583,6 @@
         });
 
 
-
         //监听表格复选框选择
         table.on('checkbox(demo)', function (obj) {
         });
@@ -590,6 +638,9 @@
                     insertZhangBu(data, table, $);
                     layer.close(index);
                 });
+            } else if (obj.event === 'updateStoreMap') {
+                updateStoreMap(data, table, $);
+
             }
         });
 
@@ -1301,6 +1352,69 @@
                     //重新加载表格
                     layui.form.render();
                 }
+            }
+        });
+    }
+
+    //生成门店地图坐标
+    function updateStoreMap(data, table, $) {
+        var longitude ="";
+        var latitude ="";
+        //页面弹框
+        var a2 = layer.open({
+            type: 1,
+            title: '店铺地图',
+            content: $('#map'),
+            area: ['1257px','560px'],
+            closeBtn: 1,
+            btn: ['确认','关闭'],
+            yes: function (index, layero) {
+                if (longitude == "" || latitude == "") {
+                    layer.msg("请先选取地图位置")
+                    return false
+                }
+                var url = storeHost + "/manage/store/updateStoreLatById";
+                var params = {"storeId":data.storeId,"gaodeLongitude":longitude,"gaodeLatitude":latitude};
+                $.post(url, params, function (res) {
+                    if (res.responseStatusType.message == "Success") {
+                        layer.msg("修改成功")
+                        table.reload("storeReload");
+                    } else {
+                        layer.msg(res.responseStatusType.error.errorMsg, {
+                            time: 20000, //20s后自动关闭
+                            btn: ['明白了']
+                        });
+                    }
+                })
+            },
+            btn2: function () {
+                layer.close(a2)
+            },
+            success: function (layero) {
+                //地图加载
+                var map = new AMap.Map("container", {
+                    resizeEnable: true
+                });
+                //为地图注册click事件获取鼠标点击出的经纬度坐标
+                map.on('click', function(e) {
+                    longitude =e.lnglat.getLng();
+                    latitude = e.lnglat.getLat();
+                    document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+                });
+                //输入提示
+                var autoOptions = {
+                    input: "tipinput"
+                };
+                var auto = new AMap.Autocomplete(autoOptions);
+                var placeSearch = new AMap.PlaceSearch({
+                    map: map
+                });  //构造地点查询类
+                AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+                function select(e) {
+                    placeSearch.setCity(e.poi.adcode);
+                    placeSearch.search(e.poi.name);  //关键字查询查询
+                }
+
             }
         });
     }

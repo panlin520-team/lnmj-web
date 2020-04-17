@@ -36,6 +36,16 @@
                     </select>
                 </div>
             </div>
+
+
+            <div class="layui-inline">
+                <label class="layui-form-label resetLabel">行业</label>
+                <div class="layui-input-inline">
+                    <select name="industrySearch" id="industrySearch" lay-filter="industry" lay-verify="required">
+                    </select>
+                </div>
+            </div>
+
             <div class="layui-inline">
                 <label class="layui-form-label">客户测评</label>
                 <div class="layui-input-inline">
@@ -52,9 +62,9 @@
             </div>
         </div>
     </div>
-<#--表格:显示商品小类-->
-    <table id="Subclass" lay-filter="Subclass"></table>
-<#--商品小类的表单-->
+    <#--表格:显示商品小类-->
+        <table id="Subclass" lay-filter="Subclass"></table>
+    <#--商品小类的表单-->
     <form id="SubclassForm" class="layui-form SubclassForm layui-form-pane layui-personal" action=""
           lay-filter="SubclassForm" hidden="true">
         <div class="layui-form-item" hidden>
@@ -69,7 +79,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label xrequired">小类名称</label>
             <div class="layui-input-block">
-                <input type="text" name="subclassName" id="subclassName" lay-verify="required" autocomplete="off" placeholder=""
+                <input type="text" name="subclassName" id="subclassName" lay-verify="required" autocomplete="off"
+                       placeholder=""
                        class="layui-input">
             </div>
         </div>
@@ -79,12 +90,13 @@
             <div class="layui-input-inline">
                 <input name="industryIdAddShow" id="industryIdAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入行业" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
-                      <#-- lay-verify="required"-->>
+                       autocomplete="off" placeholder="请输入行业" class="layui-input"
+                       style="padding-right: 9px;height: 38px;width: 185px;"
+                        <#-- lay-verify="required"-->>
                 <input name="industryId" id="industryIdAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
     cursor: pointer;" type="button" class="layui-btn" id="serachIndustryIdAdd"><i
-                        class="layui-icon layui-icon-search"></i></button>
+                            class="layui-icon layui-icon-search"></i></button>
 
             </div>
         </div>
@@ -94,12 +106,13 @@
             <div class="layui-input-inline">
                 <input name="commodityTypeAddShow" id="commodityTypeAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入大类" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
+                       autocomplete="off" placeholder="请输入大类" class="layui-input"
+                       style="padding-right: 9px;height: 38px;width: 185px;"
                        lay-verify="required">
                 <input name="commodityType" id="commodityTypeAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
     cursor: pointer;" type="button" class="layui-btn" id="serachCommodityTypeAdd"><i
-                        class="layui-icon layui-icon-search"></i></button>
+                            class="layui-icon layui-icon-search"></i></button>
 
             </div>
         </div>
@@ -112,16 +125,17 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label xrequired">客户评测</label>
+            <label class="layui-form-label">客户评测</label>
             <div class="layui-input-inline">
                 <input name="subclassEvaluatingAddShow" id="subclassEvaluatingAddShow" readonly="readonly"
                        type="text"
-                       autocomplete="off" placeholder="请输入客户评测" class="layui-input" style="padding-right: 9px;height: 38px;width: 185px;"
-                       lay-verify="required">
+                       autocomplete="off" placeholder="请输入客户评测" class="layui-input"
+                       style="padding-right: 9px;height: 38px;width: 185px;"
+                        <#--lay-verify="required"-->>
                 <input name="subclassEvaluating" id="subclassEvaluatingAdd" hidden="true" type="text">
                 <button style="position: absolute;top: 0;right: 6px;
     cursor: pointer;" type="button" class="layui-btn" id="serachSubclassEvaluatingAdd"><i
-                        class="layui-icon layui-icon-search"></i></button>
+                            class="layui-icon layui-icon-search"></i></button>
 
             </div>
         </div>
@@ -144,9 +158,8 @@
         form = layui.form;
         var $ = layui.jquery;
 
-        loadData()
-        //加载行业
-        loadIndustry();
+        loadData();
+        loadIndustry(form);
         table.render({
             elem: '#Subclass'
             , url: dataHost + "/commodityType/selectSubclassByCondition" //selectSubclassList
@@ -219,7 +232,6 @@
         });
 
 
-
         /*------行业关联数据查看-添加/修改------*/
         $("#" + "serachIndustryIdAdd").click(function () {
             var url = storeHost + "/manage/industry/selectList";
@@ -256,17 +268,17 @@
         $("#" + "serachCommodityTypeAdd").click(function () {
             var url = dataHost + "/commodityType/selectCommodityTypeList";
             var industryIdAdd = $("input[id='industryIdAdd']").val();
-            if(industryIdAdd==""||industryIdAdd==null){
+            if (industryIdAdd == "" || industryIdAdd == null) {
                 layer.msg("请先选择所属行业")
                 return
             }
-            var param = {commodityTypeIndustryID:industryIdAdd};
+            var param = {commodityTypeIndustryID: industryIdAdd};
             loadLinkData(layer, layui, url, "commodityTypeID", "commodityTypeName", param);
             table.on('row(showLinDataTable)', function (obj) {
                 var data = obj.data;
                 $("#" + "commodityTypeAddShow").val(data.commodityTypeName);
                 $("#" + "commodityTypeAdd").val(data.commodityTypeID);
-                loadPostList(form,data.commodityTypeID,data.commodityTypeIndustryID,data.commodityProductType,$);
+                loadPostList(form, data.commodityTypeID, data.commodityTypeIndustryID, data.commodityProductType, $);
                 layer.close(Open);
                 //标注选中样式
                 obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
@@ -274,7 +286,7 @@
             //搜索
             $("#searchwordLinkData").click(function () {
                 var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
-                var searchJsonName = {searchWord: wordSearch,commodityTypeIndustryID:industryIdAdd}
+                var searchJsonName = {searchWord: wordSearch, commodityTypeIndustryID: industryIdAdd}
                 layui.use('table', function () {
                     var table = layui.table;
                     table.reload('showLinDataTableRelod', {
@@ -294,11 +306,11 @@
         $("#" + "serachSubclassEvaluatingAdd").click(function () {
             var url = dataHost + "/evaluating/selectEvaluatingList";
             var industryIdAdd = $("input[id='industryIdAdd']").val();
-            if(industryIdAdd==""||industryIdAdd==null){
+            if (industryIdAdd == "" || industryIdAdd == null) {
                 layer.msg("请先选择所属行业")
                 return
             }
-            var param = {evaluatingIndustryID:industryIdAdd};
+            var param = {evaluatingIndustryID: industryIdAdd};
             loadLinkData(layer, layui, url, "evaluatingID", "evaluatingName", param);
             table.on('row(showLinDataTable)', function (obj) {
                 var data = obj.data;
@@ -311,7 +323,7 @@
             //搜索
             $("#searchwordLinkData").click(function () {
                 var wordSearch = $(".demoTable input[name='wordSearchLinkData']").val();
-                var searchJsonName = {keyWord: wordSearch,evaluatingIndustryID:industryIdAdd}
+                var searchJsonName = {keyWord: wordSearch, evaluatingIndustryID: industryIdAdd}
                 layui.use('table', function () {
                     var table = layui.table;
                     table.reload('showLinDataTableRelod', {
@@ -368,8 +380,8 @@
                     if (dataPostCategory[p].industryID == inId) {
                         intresult++;
                         var input = "<div class='layui-input-inline' style='width:90px;'>" +
-                                "<input type='checkbox' name='" + dataPostCategory[p].postCategoryId + "' value='" + dataPostCategory[p].postCategoryId + "" +
-                                "' lay-filter='post' ay-skin='primary' title='" + dataPostCategory[p].name + "'></div>";
+                            "<input type='checkbox' name='" + dataPostCategory[p].postCategoryId + "' value='" + dataPostCategory[p].postCategoryId + "" +
+                            "' lay-filter='post' ay-skin='primary' title='" + dataPostCategory[p].name + "'></div>";
                         $("#post").append(input);
                     }
                 }
@@ -410,10 +422,12 @@
         var $ = layui.$, active = {
             search: function () {
                 var commodityTypeID = $(".demoTable select[name='commodityTypeSearch'] option:selected").val(),
-                        // subclassAchievementID = $(".demoTable select[name='subclassAchievement'] option:selected").val(),
-                        subclassEvaluatingID = $(".demoTable select[name='subclassEvaluating'] option:selected").val();
+                    // subclassAchievementID = $(".demoTable select[name='subclassAchievement'] option:selected").val(),
+                    industrySearch = $(".demoTable select[name='industrySearch'] option:selected").val(),
+                    subclassEvaluatingID = $(".demoTable select[name='subclassEvaluating'] option:selected").val();
                 var params = {
                     commodityTypeID: null,
+                    industryID: industrySearch,
                     subclassEvaluatingID: null
                 };
                 if (commodityTypeID != null && commodityTypeID != 0) {
@@ -506,7 +520,7 @@
                 $.ajax({
                     type: "POST",
                     url: dataHost + "/commodityType/selectCommodityTypeById",
-                    data: {"commodityTypeID":data.commodityTypeID},
+                    data: {"commodityTypeID": data.commodityTypeID},
                     async: true,
                     error: function (request) {
                         layer.alert("与服务器连接失败/(ㄒoㄒ)/~~");
@@ -517,16 +531,14 @@
                             layer.alert(data.responseStatusType.error.errorMsg);
                         }
                         if (data.responseStatusType.message == 'Success') {
-                                if(data.result.commodityProductType == "1"){
-                                    $("#post").hide();
-                                }else{
-                                    $("#post").show();
-                                }
+                            if (data.result.commodityProductType == "1") {
+                                $("#post").hide();
+                            } else {
+                                $("#post").show();
+                            }
                         }
                     }
                 });
-
-
 
 
                 form.val("SubclassForm", {
@@ -548,7 +560,8 @@
                 for (var p in postList) {
                     jsonObj[postList[p].postCategoryId] = true;
                 }
-                form.val('SubclassForm', jsonObj);123
+                form.val('SubclassForm', jsonObj);
+                123
                 //显示商品大类
                 layero.find("select[name='commodityType']").parent().parent().show();
 
@@ -612,7 +625,7 @@
                 $.ajax({
                     type: "POST",
                     url: dataHost + "/commodityType/selectCommodityTypeById",
-                    data: {"commodityTypeID":data.commodityTypeID},
+                    data: {"commodityTypeID": data.commodityTypeID},
                     async: true,
                     error: function (request) {
                         layer.alert("与服务器连接失败/(ㄒoㄒ)/~~");
@@ -623,9 +636,9 @@
                             layer.alert(data.responseStatusType.error.errorMsg);
                         }
                         if (data.responseStatusType.message == 'Success') {
-                            if(data.result.commodityProductType == "1"){
+                            if (data.result.commodityProductType == "1") {
                                 $("#post").hide();
-                            }else{
+                            } else {
                                 $("#post").show();
                             }
                         }
@@ -661,7 +674,6 @@
     function addNewSubclass() {
         // //获取商品大类的值
         // var commidity = $(".demoTable select[name='commodityTypeAdd'] option:selected").val();
-        loadIndustry();
         $("select[name='commodityType']").empty();
         $("#post").empty();
         var a2 = layer.open({
@@ -755,8 +767,8 @@
             if (dataPostCategory[p].industryID == inId) {
                 intresult++
                 var input = "<div class='layui-input-inline' style='width:90px;'>" +
-                        "<input type='checkbox' name='" + dataPostCategory[p].postCategoryId + "' value='" + dataPostCategory[p].postCategoryId + "" +
-                        "' lay-filter='post' ay-skin='primary' title='" + dataPostCategory[p].name + "'></div>";
+                    "<input type='checkbox' name='" + dataPostCategory[p].postCategoryId + "' value='" + dataPostCategory[p].postCategoryId + "" +
+                    "' lay-filter='post' ay-skin='primary' title='" + dataPostCategory[p].name + "'></div>";
                 $("#post").append(input);
             }
         }
@@ -768,26 +780,6 @@
 
 
 
-
-
-
-    //加载行业
-    function loadIndustry() {
-        $("select[name='industryId']").empty();
-        var url = storeHost + "/manage/industry/selectListIndustryNoPage";
-        $.post(url, function (result) {
-            if (result.responseStatusType.message == "Success") {
-                var list = result.result;    //返回的数据
-                var option1 = "<option value='' selected='selected'>请选择</option>";
-                $("select[name='industryId']").append(option1);
-                for (var p in list) {
-                    var option = "<option value='" + list[p].industryID + "'>" + list[p].industryName + "</option>";
-                    $("select[name='industryId']").append(option);
-                }
-                layui.form.render();
-            }
-        })
-    }
 
     function loadCommodityType(id) {
         var param;
@@ -816,7 +808,7 @@
         });
     }
 
-    function loadPostList(form,commitTypeId,inId,productType,$) {
+    function loadPostList(form, commitTypeId, inId, productType, $) {
         var url = storeHost + "/manage/beautician/selectPostCategoryNoPage";
         var data = {};
         $.ajax({
@@ -858,12 +850,13 @@
                     }
                     // form.render('checkbox');
                     form.render();
-                }else{
+                } else {
                     $("#post").html("<span style='color: red'>  选中的大类所属的行业暂未添加任何职位分类，请先添加</span>");
                 }
             }
         });
     }
+
     function loadData() {
         //请求职位数据 selectPostNoPage
         $.ajax({
@@ -939,6 +932,31 @@
         form.render("select", "SubclassForm");
         form.render("select", "demoTable");
     }
+
+
+    function loadIndustry(form) {
+        //加载店铺列表信息
+        var url = storeHost + "/manage/industry/selectListIndustryNoPage";
+        var data = {};
+        $.post(url, data, function (result) {
+            if (result.responseStatusType.message == "Success") {
+                var list = result.result;    //返回的数据
+                var server = document.getElementById("industrySearch"); //server为select定义的id
+                server.innerHTML = "<option value='' selected='selected'>请选择</option>";
+                for (var p in list) {
+                    var option = document.createElement("option");  // 创建添加option属性
+                    option.setAttribute("value", list[p].industryID); // 给option的value添加值
+                    option.innerText = list[p].industryName;     // 打印option对应的纯文本
+                    server.appendChild(option);           //给select添加option子标签
+                }
+                form.render();
+            } else {
+
+            }
+        })
+    }
+
+
 </script>
 </body>
 </html>
